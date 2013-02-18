@@ -1,0 +1,38 @@
+/*	Andres Monroy
+	U0733037
+	CS4540 
+*/
+
+@CHARSET "UTF-8";
+body { background-color:#f9dfcb; }
+h1 { text-align:center; color:black }
+table { 
+	text-align:center; 
+	color:black; 
+	border: 5px solid black; 
+	border-collapse:collapse;
+	margin:auto;
+	font-size:50px;
+}
+tr { border: 5px solid black; height: 100px; width: 100px; }
+td { border: 5px solid black; height: 100px; width: 100px; }
+p {text-align:center; font-size:20px}
+.gameboard input { 
+	height:90px; 
+	width:90px; 
+	background-color:#faaaab;
+	font-size:30px;
+	color:#faaaab;
+}
+.select { 
+	font-size:30px;
+	margin-left:40%;
+	margin-right:auto;
+}
+
+
+#Reset {
+	font-size:30px;
+	margin-left:50%;
+	margin-right:50%;
+}

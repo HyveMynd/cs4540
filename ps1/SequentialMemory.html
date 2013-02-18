@@ -1,0 +1,28 @@
+<!--
+	Andres Monroy
+	U0733037  
+	CS4540
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="MemoryStyle.css" type="text/css" /> 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="MemoryControl.js" type="text/javascript" ></script>
+<title>Number Memory</title>
+</head>
+<body>
+<h1>Sequential Memory!</h1>
+<input id=Reset type=button onclick=window.location.reload() value=Reset />
+<div class=gameboard ></div>
+<div class=select>
+	<button id=num3 onclick="displayBoard(3)">Start with 9!</button>
+	<button id=num5 onclick="displayBoard(5)">Start with 25!</button>
+	<button id=num10 onclick="displayBoard(10)">Start with 100!</button>
+</div>
+<p class=Instructions >The goal of the game is to try and find all the 
+numbers sequentially starting from 1. Careful not to pick the wrong number or you'll
+have to start all over again. Try it with 100 numbers for a real challenge!</p>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?php
+require 'hidden/dbpassword.php';
+
+// Opens and returns a DB connection
+function openDBConnection () {
+	global $dbpassword;
+	$DBH = new PDO("mysql:host=atr.eng.utah.edu;dbname=ps4_monroy",
+			'monroy_sw', $dbpassword);
+	$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	return $DBH;
+}
+
+
+?>

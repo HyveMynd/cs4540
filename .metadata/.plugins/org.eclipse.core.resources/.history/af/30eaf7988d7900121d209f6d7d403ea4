@@ -1,0 +1,49 @@
+<?php
+require 'hidden/dbpassword.php';
+
+// Opens and returns a DB connection
+function openDBConnection () {
+	global $dbpassword;
+	$DBH = new PDO("mysql:host=atr.eng.utah.edu;dbname=ps4_monroy",
+			'monroy_sw', $dbpassword);
+	$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	return $DBH;
+}
+
+function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	//get id
+	$id = getResumeID($DBH, $resumeName);
+	
+	//store contact info
+	$stmt->bindValue(1, $name);
+	$stmt->bindValue(2, $login);
+	$hashedPassword = computeHash($password, makeSalt());
+	$stmt->bindValue(3, $hashedPassword);
+	$stmt->execute();
+	$userid = $DBH->lastInsertId();
+}
+
+function getResumeID ($DBH, $resumeName){
+	//get the ResumeID
+	$stmt = $DBH->prepare("select resumeid from ps4_monroy.resumenames where resumename=?");
+	$stmt->bindValue(1, $resumeName);
+	$stmt->execute();
+	
+	//create resume if not in database
+	if ($stmt->rowCount() <= 0){
+		$query2 = $DBH->prepare("insert into ResumeNames (ResumeName) values (?)");
+		$query2->bindValue(1, $resumeName);
+		$query2->execute();
+	}
+	
+	$_SESSION[$resumeName] = $stmt->fetchColumn();
+	return $_SESSION[$resumeName];
+}
+
+function storeContactInfo ($DBH, $name, $phone, $addr){
+	$stmt-> = DBH->prepare("insert ")
+}
+?>

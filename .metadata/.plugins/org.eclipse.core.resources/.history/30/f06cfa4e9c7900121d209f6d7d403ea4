@@ -1,0 +1,14 @@
+<?php
+require 'db.php';
+
+if (isset($_REQUEST['resumeName'])){
+	$_SESSION['resumeName'] = $_REQUEST['resumeName'];
+	$resumeName = $_REQUEST['resumeName'];
+	storeResume($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc);
+	echo "<script type=text/javascript >alert('Operation Successful')</script>";
+	require 'archive.php';
+}
+else{
+	require 'archive.php';
+}
+?>

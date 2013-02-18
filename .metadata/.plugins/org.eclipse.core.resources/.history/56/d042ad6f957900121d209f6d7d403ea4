@@ -1,0 +1,6 @@
+<?php
+require 'Variables.php';
+require 'db.php';
+echo "<script type=text/javascript >alert('entered store')</script>";
+//storeResume($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc);
+?>

@@ -1,0 +1,6 @@
+<?php
+require 'Variables.php';
+require 'db.php'
+
+storeResume($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc);
+?>

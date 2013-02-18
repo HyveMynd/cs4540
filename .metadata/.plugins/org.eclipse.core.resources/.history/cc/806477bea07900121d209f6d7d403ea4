@@ -1,0 +1,19 @@
+<?php
+require 'db.php';
+require 'functions.php';
+
+$name = getSessionVar('name');
+$phone =  getSessionVar('phone');
+$addr = getSessionVar('address');
+$position = getSessionVar('position');
+$startdate = getSessionVar('startDate');
+$enddate = getSessionVar('endDate');
+$desc = getSessionVar('desc');
+
+$_SESSION['resumeName'] = $_REQUEST['resumeName'];
+$resumeName = $_REQUEST['resumeName'];
+storeResume($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc);
+echo "<script type=text/javascript >alert(".$name.")</script>";
+require 'index.php';
+
+?>

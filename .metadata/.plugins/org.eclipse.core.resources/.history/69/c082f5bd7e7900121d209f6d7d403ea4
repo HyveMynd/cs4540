@@ -1,0 +1,9 @@
+<?php
+function sticky ($name) {
+	if (isset($_SESSION[$name])) {
+		echo $_SESSION[$name];
+	}
+}
+
+
+?>

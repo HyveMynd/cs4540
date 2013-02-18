@@ -1,0 +1,22 @@
+<?php
+session_start();
+//output session variables if they are set
+function sticky ($name){
+	if (isset($_REQUEST[$name])){
+		$_SESSION[$name] = $_REQUEST[$name];
+		echo $_SESSION[$name];
+	}
+	elseif (isset($_SESSION[$name])){
+		echo $_SESSION[$name];
+	}
+}
+
+function getSessionVar ($name){
+	if (isset($_SESSION[$name])){
+		return $_SESSION[$name];
+	}
+	else{
+		return '';
+	}
+}
+?>

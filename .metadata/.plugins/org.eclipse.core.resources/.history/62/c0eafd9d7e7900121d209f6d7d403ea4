@@ -1,0 +1,9 @@
+<?php
+function sticky ($name) {
+	if (isset($_REQUEST[$name])) {
+		echo $_REQUEST[$name];
+	}
+}
+
+
+?>

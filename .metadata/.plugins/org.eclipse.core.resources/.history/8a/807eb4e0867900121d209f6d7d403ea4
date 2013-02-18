@@ -1,0 +1,28 @@
+<?php
+require 'functions.php';
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="style.css" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+<script src=resume.js type="text/javascript"></script>
+<title>Employment History</title>
+</head>
+<body class='archive'>
+	<h1>Archive Resume</h1>
+	<table>
+		<tr>
+			<td><input type="text" value="<?php sticky('resumeName')?>" /></td>
+			<td><input type="button" value="Store Resume" onclick="addField()"/></td>
+			<td><input type="button" value="Load Resume" onclick="addField()"/></td>
+			<td><input type="button" value="Delete Resume" onclick="addField()"/></td>
+			<td><input type="button" value="View Resume" onclick="addField()"/></td>
+		</tr>
+	</table>
+	<p><a href="contactInfo.php" >Contact Info</a></p>
+	<p><a href="positionSought.php" >Position Sought</a></p>
+	<p><a href="archive.php" >Archive Resume</a></p>
+	<p><a href="resume.php" >View Resume</a></p>
+</body>

@@ -1,0 +1,18 @@
+<?php
+session_start();
+require 'db.php';
+
+$_SESSION['resumeName'] = $_REQUEST['resumeName'];
+$resumeName = $_REQUEST['resumeName'];
+$array = loadResume($resumeName);
+
+//store values into session variables
+$_SESSION['name'] = $array['contactInfo'][0]['Name'];
+$_SESSION['phone'] = $array['contactInfo'][0]['Phone'];
+$_SESSION['address'] = $array['contactInfo'][0]['Address'];
+$_SESSION['position'] = $array['positionSought'][0]['JobDesc'];
+//$_SESSION['startDate'] = $array['empHistory'];
+
+echo "<script type=text/javascript >alert('Operation Sucessful')</script>";
+require 'archive.php';
+?>

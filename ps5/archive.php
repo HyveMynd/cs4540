@@ -13,14 +13,14 @@ session_start();
 </head>
 <body class='archive'>
 	<h1>Archive Resume</h1>
-	<form method="post" action="Switch.php">
+	<form method="get" action="Switch.php">
 	<table>
 		<tr>
-			<td><input name="resumeName" type="text" value="<?php sticky('resumeName')?>" maxlength="20" required /></td>
+			<td><input id="resName" name="name" type="text" value="<?php sticky('resumeName')?>" maxlength="20" required /></td>
 			<td><input type="submit" name=submit value="Store" /></td>
 			<td><input type="submit" name=submit value="Load" /></td>
 			<td><input type="submit" name=submit value="Delete" /></td>
-			<td><input type="submit" name=submit value="View" /></td>
+			<td><input type="button" value="View" onclick="viewResume()" /></td>
 		</tr>
 	</table>
 	</form>
@@ -28,5 +28,10 @@ session_start();
 	<p><a href="positionSought.php" >Position Sought</a></p>
 	<p><a href="employmentHistory.php" >Employment History</a></p>
 	<p><a href="archive.php" >Archive Resume</a></p>
-	<p><a href="resume.php" >View Resume</a></p>
+	<p><a href="viewResume.php" >View Resume</a></p>
 </body>
+<script type="text/javascript" >
+function viewResume(){
+	window.open('resume.php?name=' + $("#resName").val());
+}
+</script>

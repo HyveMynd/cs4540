@@ -1,5 +1,8 @@
 <?php
 session_start();
+require 'db.php';
+$contactInfo = viewResume($_REQUEST["name"])['contactInfo'];
+$position = viewResume($_REQUEST['name'])['position'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,7 +23,7 @@ session_start();
 				<p>Enter your Name:</p>
 			</td>
 			<td>
-				<input name=name type="text" value="<?php echo $_SESSION['name']?>" readonly />
+				<input name=name type="text" value="<?php echo $contactInfo['Name']?>" readonly />
 			</td>
 		</tr>
 		<tr>
@@ -28,7 +31,7 @@ session_start();
 				<p>Enter Your Address</p>
 			</td>
 			<td>
-				<input name=address type="text" value="<?php echo $_SESSION['address']?>" readonly />
+				<input name=address type="text" value="<?php echo $contactInfo['Address']?>" readonly />
 			</td>
 		</tr>
 		<tr>
@@ -36,33 +39,33 @@ session_start();
 				<p>Enter Your Phone Number</p>
 			</td>
 			<td>
-				<input name=phone type="text" value="<?php echo $_SESSION['phone']?>" readonly />
+				<input name=phone type="text" value="<?php echo $contactInfo['Phone']?>" readonly />
 			</td>
 		</tr>
 	</table>
 	<h3>Position Sought</h3>
 	<div>
-	<textarea name=position rows=5 cols=50 readonly><?php echo $_SESSION['position']?></textarea>
+	<textarea name=position rows=5 cols=50 readonly><?php echo $position['JobDesc']?></textarea>
 	</div>
 	</form>
 	<h3 id=employ>
 	</h3>
-	<p><a href="contactInfo.php" >Contact Info</a></p>
-	<p><a href="positionSought.php" >Position Sought</a></p>
-	<p><a href="employmentHistory.php" >Employment History</a></p>
 </body>
 <script type="text/javascript">
 <?php
+$startDates = viewResume($_REQUEST['name'])['empHistory']['startDates'];
+$endDates = viewResume($_REQUEST['name'])['empHistory']['endDates'];
+$descs = viewResume($_REQUEST['name'])['empHistory']['descs'];
 //conver the php arrays to js arrays
-$startjs = json_encode($_SESSION["startDate"]);
-$endjs = json_encode($_SESSION["endDate"]);
-$descjs = json_encode($_SESSION["desc"]);
+$startjs = json_encode($startDates);
+$endjs = json_encode($endDates);
+$descjs = json_encode($descs);
 echo "var startArray = ". $startjs . ";\n";
 echo "var endArray = ".$endjs . ";\n";
 echo "var descArray = ".$descjs . ";\n";
 ?>
 $('document').ready( function(){
-	addReadonly(<?php echo count($_SESSION["startDate"]) ?>);
+	addReadonly(<?php echo count($startDates) ?>);
 });
 </script>
 </html>

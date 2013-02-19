@@ -45,6 +45,6 @@ session_start();
 	<p><a href="positionSought.php" >Position Sought</a></p>
 	<p><a href="employmentHistory.php" >Employment History</a></p>
 	<p><a href="archive.php" >Archive Resume</a></p>
-	<p><a href="resume.php" >View Resume</a></p>
+	<p><a href="viewResume.php" >View Resume</a></p>
 </body>
 </html>

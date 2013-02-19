@@ -1,0 +1,8 @@
+<?php
+session_start();
+require 'db.php';
+
+$_SESSION['resumeName'] = $_REQUEST['resumeName'];
+echo "<script type=text/javascript >window.open('viewResume.php')</script>";
+require 'archive.php';
+?>

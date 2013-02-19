@@ -1,0 +1,212 @@
+<?php
+require 'hidden/dbpassword.php';
+
+// Opens and returns a DB connection
+function openDBConnection () {
+	global $dbpassword;
+	$DBH = new PDO("mysql:host=atr.eng.utah.edu;dbname=ps4_monroy",
+			'monroy_sw', $dbpassword);
+	$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	return $DBH;
+}
+
+function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc){
+// 	echo $name.$phone.$addr.$position;
+	
+	try{
+		//get id
+		$id = getResumeID($resumeName);
+				
+		//store contact info
+		storeContactInfo($id, $name, $phone, $addr);
+		
+		//store position indo
+		storePositionSought($id, $position);
+		
+		//store employment history
+		storeEmploymentHistory($id, $startdate, $enddate, $desc);
+		
+	}
+	catch (PDOException $e){
+		if ($e->getCode() == 23000) {
+			return false;
+		}
+		reportDBError($e);
+	}
+}
+
+function createResume(){
+	
+}
+
+function getResumeID ($resumeName){
+	//get the ResumeID
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	$stmt = $DBH->prepare("select * from ResumeNames where ResumeName=?");
+	$stmt->bindValue(1, $resumeName);
+	$stmt->execute();
+	
+	//create resume if not in database
+	if ($stmt->rowCount() <= 0){
+		$query2 = $DBH->prepare("insert into ResumeNames (ResumeName) values (?)");
+		$query2->bindValue(1, $resumeName);
+		$query2->execute();
+		$stmt->execute();
+	}
+	
+	$row = $stmt->fetch();
+	$DBH->commit();
+	return $row['ResumeID'];
+}
+
+function storeContactInfo ($id, $name, $phone, $addr){
+	global $insert;
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+
+	//Choose either update or insert
+	$stmt = $DBH->prepare("insert into ContactInfo (Name, Phone, Address, ID) values (?,?,?,?)
+			on duplicate key update Name=?, Phone=?, Address=?");
+		
+	$stmt->bindValue(1, $name);
+	$stmt->bindValue(2, $phone);
+	$stmt->bindValue(3, $addr);
+	$stmt->bindValue(4, $id);
+	$stmt->bindValue(5, $name);
+	$stmt->bindValue(6, $phone);
+	$stmt->bindValue(7, $addr);
+	$stmt->execute();
+	return $DBH->commit();
+}
+
+function storePositionSought ($id, $position){
+	global $insert;
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	//Choose either update or insert
+	$stmt = $DBH->prepare("insert into PositionSought (JobDesc, ID) values (?,?)
+			on duplicate key update JobDesc=?");
+
+	$stmt->bindValue(1, $position);
+	$stmt->bindValue(2, $id);
+	$stmt->bindValue(3, $position);
+	$stmt->execute();
+	return $DBH->commit();
+}
+
+function storeEmploymentHistory ($id, $startdate, $enddate, $desc){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$count = count($startdate);
+	
+	for ($i = 0; $i < $count; $i++){
+		$stmt = $DBH->prepare("insert into EmploymentHistory (ID, StartDate, EndDate, Description) values (?,?,?,?)
+				on duplicate key update StartDate=?, EndDate=?, Description=?");
+		$stmt->bindValue(1, $id);
+		$stmt->bindValue(2, $startdate[$i]);
+		$stmt->bindValue(3, $enddate[$i]);
+		$stmt->bindValue(4, $desc[$i]);
+		$stmt->bindValue(5, $startdate[$i]);
+		$stmt->bindValue(6, $enddate[$i]);
+		$stmt->bindValue(7, $desc[$i]);
+		$stmt->execute();
+	}
+	
+	return $DBH->commit();
+}
+
+function deleteResume ($resumeName){
+	$id = getResumeID($resumeName);
+	
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$stmt = $DBH->prepare("delete from ResumeNames where ResumeID=?");
+	$stmt->bindValue(1, $id);
+	$stmt->execute();
+	
+	return $DBH->commit();
+}
+
+function loadResume ($resumeName){
+	$id = getResumeID($resumeName);
+	
+	$contactInfo = loadContactInfo($id);
+	$position = loadPositionSought($id);
+	$empHistory = loadEmploymentHistory($id);
+	
+	$resume = array(
+			"contactInfo" => $contactInfo,
+			"positionSought" => $position,
+			"empHist" => $empHistory
+			);
+	
+	return $resume;
+}
+
+function loadContactInfo($id){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$stmt = $DBH->prepare("select * from ContactInfo where ID=?");
+	$stmt->bindValue(1, $id);
+	$stmt->execute();
+	
+	$row = $stmt->fetchAll();
+	$DBH->commit();
+	return $row;
+}
+
+function loadPositionSought($id){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$stmt = $DBH->prepare("select * from PositionSought where ID=?");
+	$stmt->bindValue(1, $id);
+	$stmt->execute();
+	
+	$row = $stmt->fetchAll();
+	$DBH->commit();
+	return $row;
+}
+
+function loadEmploymentHistory($id){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$stmt = $DBH->prepare("select * from EmploymentHistory where ID=?");
+	$stmt->bindValue(1, $id);
+	$stmt->execute();
+	
+// 	$startDates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// 	$endDates = $stmt->fetchAll(PDO::FETCH_COLUMN, 2);
+// 	$descs = $stmt->fetchAll(PDO::FETCH_COLUMN, 3);
+// 	$array = array(
+// 			"startDates" => $startDates,
+// 			"endDates" => $endDates,
+// 			"descs" => $descs
+// 			);
+
+	$array = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo $array
+	$DBH->commit();
+	return $array;
+}
+
+// Logs and reports a database error
+function reportDBError ($exception) {
+	$file = fopen("log.txt", "a");
+	fwrite($file, date(DATE_RSS));
+	fwrite($file, "\n");
+	fwrite($file, $exception->getMessage());
+	fwrite($file, $exception->getTraceAsString());
+	fwrite($file, "\n");
+	fwrite($file, "\n");
+	fclose($file);
+	require 'error.php';
+	exit();
+}
+?>

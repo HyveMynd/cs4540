@@ -29,7 +29,7 @@ $desc = $_SESSION["desc"];
 	<p><a href="contactInfo.php" >Contact Info</a></p>
 	<p><a href="positionSought.php" >Position Sought</a></p>
 	<p><a href="archive.php" >Archive Resume</a></p>
-	<p><a href="resume.php" >View Resume</a></p>
+	<p><a href="viewResume.php" >View Resume</a></p>
 </body>
 <script type="text/javascript">
 <?php

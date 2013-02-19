@@ -1,8 +1,19 @@
 <?php
 session_start();
 require 'db.php';
-$contactInfo = viewResume($_REQUEST["name"])['contactInfo'];
-$position = viewResume($_REQUEST['name'])['position'];
+$resume = viewResume($_REQUEST['name']);
+
+if ($resume == null){
+	require 'archive.php';	
+	echo "<script type=text/javascript >alert('Operation Failed. Resume does not exist.')</script>";
+	exit();
+}
+
+$contactInfo = $resume['contactInfo'];
+$position = $resume['position'];
+$startDates = $resume['empHistory']['startDates'];
+$endDates = $resume['empHistory']['endDates'];
+$descs = $resume['empHistory']['descs'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,9 +64,6 @@ $position = viewResume($_REQUEST['name'])['position'];
 </body>
 <script type="text/javascript">
 <?php
-$startDates = viewResume($_REQUEST['name'])['empHistory']['startDates'];
-$endDates = viewResume($_REQUEST['name'])['empHistory']['endDates'];
-$descs = viewResume($_REQUEST['name'])['empHistory']['descs'];
 //conver the php arrays to js arrays
 $startjs = json_encode($startDates);
 $endjs = json_encode($endDates);

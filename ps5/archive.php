@@ -1,6 +1,7 @@
 <?php
 require 'functions.php';
-session_start();
+if(session_id() == '')
+	session_start();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,11 +17,12 @@ session_start();
 	<form method="get" action="Switch.php">
 	<table>
 		<tr>
+			<td>Resume Name</td>
 			<td><input id="resName" name="name" type="text" value="<?php sticky('resumeName')?>" maxlength="20" required /></td>
 			<td><input type="submit" name=submit value="Store" /></td>
 			<td><input type="submit" name=submit value="Load" /></td>
 			<td><input type="submit" name=submit value="Delete" /></td>
-			<td><input type="button" value="View" onclick="viewResume()" /></td>
+			<td><input type="submit" name=submit value="View" /></td>
 		</tr>
 	</table>
 	</form>
@@ -31,7 +33,5 @@ session_start();
 	<p><a href="viewResume.php" >View Resume</a></p>
 </body>
 <script type="text/javascript" >
-function viewResume(){
-	window.open('resume.php?name=' + $("#resName").val());
-}
+
 </script>

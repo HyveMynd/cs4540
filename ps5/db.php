@@ -16,6 +16,11 @@ function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, 
 	try{
 		//get id
 		$id = getResumeID($resumeName);
+		
+		if ($id <= 0){
+			createResume($resumeName);
+			$id = getResumeID($resumeName);
+		}
 
 		storeContactInfo($id, $name, $phone, $addr);
 		storePositionSought($id, $position);
@@ -31,8 +36,14 @@ function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, 
 	}
 }
 
-function createResume(){
-	
+function createResume($resumeName){
+	//create resume if not in database
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	$query2 = $DBH->prepare("insert into ResumeNames (ResumeName) values (?)");
+	$query2->bindValue(1, $resumeName);
+	$query2->execute();
+	return $DBH->commit();
 }
 
 function getResumeID ($resumeName){
@@ -42,18 +53,14 @@ function getResumeID ($resumeName){
 	$stmt = $DBH->prepare("select * from ResumeNames where ResumeName=?");
 	$stmt->bindValue(1, $resumeName);
 	$stmt->execute();
-	
-	//create resume if not in database
-	if ($stmt->rowCount() <= 0){
-		$query2 = $DBH->prepare("insert into ResumeNames (ResumeName) values (?)");
-		$query2->bindValue(1, $resumeName);
-		$query2->execute();
-		$stmt->execute();
-	}
-	
-	$row = $stmt->fetch();
+	$rows = $stmt->fetchAll();
 	$DBH->commit();
-	return $row['ResumeID'];
+	
+	//not found
+	if (count($rows) == 0)
+		return -1;
+	
+	return $rows[0]['ResumeID'];
 }
 
 function storeContactInfo ($id, $name, $phone, $addr){
@@ -117,6 +124,9 @@ function storeEmploymentHistory ($id, $startdate, $enddate, $desc){
 function deleteResume ($resumeName){
 	$id = getResumeID($resumeName);
 	
+	if ($id <= 0)
+		return false;
+	
 	$DBH = openDBConnection();
 	$DBH->beginTransaction();
 	
@@ -130,6 +140,9 @@ function deleteResume ($resumeName){
 function loadResume ($resumeName){
 	$id = getResumeID($resumeName);
 	
+	if ($id <= 0)
+		return false;
+	
 	loadContactInfo($id);
 	loadPositionSought($id);
 	loadEmploymentHistory($id);
@@ -139,6 +152,9 @@ function loadResume ($resumeName){
 
 function viewResume ($resumeName){
 	$id = getResumeID($resumeName);
+	
+	if ($id <= 0)
+		return null;
 	
 	$contactInfo = viewContactInfo($id);
 	$position = viewPositionSought($id);
@@ -206,9 +222,13 @@ function loadEmploymentHistory($id){
 	$q2->execute();
 	$q3->execute();
 	
-	$_SESSION['startDate'] = $q1->fetchAll(PDO::FETCH_COLUMN);
-	$_SESSION['endDate'] = $q2->fetchAll(PDO::FETCH_COLUMN);
-	$_SESSION['desc'] = $q3->fetchAll(PDO::FETCH_COLUMN);
+	$startdates = $q1->fetch(PDO::FETCH_COLUMN);
+	$enddates = $q2->fetch(PDO::FETCH_COLUMN);
+	$descs = $q3->fetch(PDO::FETCH_COLUMN);
+	
+	$_SESSION['startDate'] = unserialize($startdates);
+	$_SESSION['endDate'] = unserialize($enddates);
+	$_SESSION['desc'] = unserialize($descs);
 	
 	return $DBH->commit();
 }
@@ -228,9 +248,9 @@ function viewEmploymentHistory ($id){
 	$q3->execute();
 	
 	$array = array (
-			"startDates" => $q1->fetchAll(PDO::FETCH_COLUMN),
-			"endDates" => $q2->fetchAll(PDO::FETCH_COLUMN),
-			"descs" => $q3->fetchAll(PDO::FETCH_COLUMN)
+			"startDates" => unserialize($q1->fetch(PDO::FETCH_COLUMN)),
+			"endDates" => unserialize($q2->fetch(PDO::FETCH_COLUMN)),
+			"descs" => unserialize($q3->fetch(PDO::FETCH_COLUMN))
 			);
 	$DBH->commit();
 	

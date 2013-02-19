@@ -2,9 +2,12 @@
 session_start();
 require 'db.php';
 
-$_SESSION['resumeName'] = $_REQUEST['name'];
-$resumeName = $_REQUEST['name'];
-loadResume($resumeName);
-echo "<script type=text/javascript >alert('Operation Sucessful')</script>";
+$result = loadResume($_REQUEST['name']);
+if($result){
+	echo "<script type=text/javascript >alert('Operation Sucessful')</script>";
+	$_SESSION['resumeName'] = $_REQUEST['name'];
+}
+else
+	echo "<script type=text/javascript >alert('Operation Failed. Resume does not exist.')</script>";
 require 'archive.php';
 ?>

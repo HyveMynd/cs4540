@@ -1,4 +1,8 @@
-INDEX VERSION 1.122+C:\xampp\htdocs\cs4540\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1336691829.index
-2711760217.index
-950762723.index
+INDEX VERSION 1.122+/Applications/XAMPP/xamppfiles/htdocs/cs4540/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1092711313.index
+3150012845.index
+333416656.index
+3626508843.index
+4048947164.index
+3745900082.index
+908477191.index

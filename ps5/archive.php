@@ -1,7 +1,7 @@
 <?php
-require 'functions.php';
-if(session_id() == '')
+if(!isset($_SESSION))
 	session_start();
+require 'functions.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -14,7 +14,7 @@ if(session_id() == '')
 </head>
 <body class='archive'>
 	<h1>Archive Resume</h1>
-	<form method="get" action="Switch.php">
+	<form method="post" action="Switch.php">
 	<table>
 		<tr>
 			<td>Resume Name</td>
@@ -29,7 +29,6 @@ if(session_id() == '')
 	<p><a href="contactInfo.php" >Contact Info</a></p>
 	<p><a href="positionSought.php" >Position Sought</a></p>
 	<p><a href="employmentHistory.php" >Employment History</a></p>
-	<p><a href="archive.php" >Archive Resume</a></p>
 	<p><a href="viewResume.php" >View Resume</a></p>
 </body>
 <script type="text/javascript" >

@@ -2,7 +2,6 @@
 switch ($_REQUEST['submit']){
 	case'Store':
 		require 'Store.php';
-		$_SESSION['resumeName'] = $_REQUEST['name'];
 		break;
 	case'Delete':
 		require 'Delete.php';

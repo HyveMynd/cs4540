@@ -1,8 +1,0 @@
-<?php
-switch ($_REQUEST['submit']){
-	case'Store':
-		echo "<script type=text/javascript >alert(".$_SESSION['name'].")</script>";
-		require 'Store.php';
-		break;
-}
-?>

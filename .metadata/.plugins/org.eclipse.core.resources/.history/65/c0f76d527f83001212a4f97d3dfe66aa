@@ -1,0 +1,37 @@
+<?php
+
+require '../hidden/dbpassword.php'
+
+class resumeSite {
+	var $userName;
+	var $userRole;
+	var $pageOrigin;
+	
+	function CheckLogin(){
+		
+	}
+	
+	function Login(){
+		
+	}
+	
+	function Logout(){
+		
+	}
+	
+	function SetPageOrigin(){
+		
+	}
+	
+	function RedirectUser(){
+		
+	}
+	
+	function RegisterUser(){
+		
+	}
+	
+	
+}
+
+?>

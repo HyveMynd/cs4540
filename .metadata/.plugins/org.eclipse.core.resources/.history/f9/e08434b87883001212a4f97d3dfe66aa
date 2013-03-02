@@ -1,0 +1,48 @@
+<?php
+$docRoot = $_SERVER['DOCUMENT_ROOT'].'/cs4540/ps6/';
+include $docRoot.'Views/header.php';
+include $docRoot.'Views/registrationLinks.php';
+require '../helper/functions.php';
+session_start();
+?>
+<link rel="stylesheet" href="../style/style.css" type="text/css" />
+</head>
+<body class='contact'>
+	<form action="contactInfo.php" method="post">
+	<h1>Contact Information</h1>
+		<table>
+			<tr>
+				<td>
+					<p>Enter your Name:</p>
+				</td>
+				<td>
+					<input name=name type="text" value="<?php sticky('name')?>" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>Enter Your Address</p>
+				</td>
+				<td>
+					<input name=address type="text" value="<?php sticky('address')?>" required />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>Enter Your Phone Number</p>
+				</td>
+				<td>
+					<input name=phone type="tel" value="<?php sticky('phone')?>" required />
+				</td>
+			</tr>
+		</table>
+		<input type="button" value=Submit onclick="validate()" />
+	</form>
+	<p><a href="positionSought.php" >Position Sought</a></p>
+	<p><a href="employmentHistory.php" >Employment History</a></p>
+	<p><a href="../Views/archive/archive.php" >Archive Resume</a></p>
+	<p><a href="viewResume.php" >View Resume</a></p>
+</body>
+<script type="text/javascript" src=resume.js ></script>
+<script type="text/javascript" src="gen_validatorv31.js" ></script>
+</html>

@@ -1,0 +1,6 @@
+<?php
+require_once("../authentification/auth_config.php");
+session_start();
+session_destroy();
+?>
+<script>history.go(-1)</script>

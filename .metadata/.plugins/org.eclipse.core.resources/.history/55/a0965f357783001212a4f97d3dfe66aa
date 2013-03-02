@@ -1,0 +1,14 @@
+<?php
+include 'Views/header.php'; 
+include 'Views/registrationLinks.php';
+?>
+</head>
+<body>
+	<form action="main/contactInfo.php">
+		<h1>Lets Get Started with Your Resume!</h1>
+		<input type="submit" value="Get Started" />
+	</form>
+</body>
+<?php 
+include $_SERVER['DOCUMENT_ROOT'].'/cs4540/Views/footer.php';
+?>

@@ -1,0 +1,4 @@
+<div class='regLinks' style="display: inline-block; text-align: right; color: blue;">
+<a href="login.php" >[Login]</a>
+<a href="register.php" >[Register]</a>
+</div>

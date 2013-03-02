@@ -1,0 +1,64 @@
+<?php
+
+require $_SERVER['DOCUMENT_ROOT'].'/cs4540/ps6/hidden/dbpassword.php';
+
+class resumeSite {
+	var $userName = "";
+	var $userPass = "";
+	var $docRoot = $_SERVER['DOCUMENT_ROOT'].'/cs4540/ps6/';
+	var $userRole;
+	var $pageOrigin;
+	
+	function CheckLogin(){
+		if(!isset($_SESSION)){ session_start(); }
+		
+		if($userName == ""){
+			return false;
+		}
+		return true;
+	}
+	
+	function Login(){
+		$userName = $_POST['loginName'];
+		$userPass = $_POST['loginPass'];
+		if(CheckLoginInDB())
+			return true;
+		else
+			return false;
+	}
+	
+	function Logout(){
+		
+	}
+	
+	function SetPageOrigin(){
+		
+	}
+	
+	function RedirectUser(){
+		
+	}
+	
+	function RegisterUser(){
+		
+	}
+	
+	function RedirectToURL($url)
+	{
+		header("Location: $url");
+		exit;
+	}
+	
+	function CheckLoginInDB(){
+		$badLogin = false;
+		
+		if ($badLogin){
+			$userName = "";
+			$userPass = "";
+			return false;
+		}
+		return true;
+	}
+}
+
+?>

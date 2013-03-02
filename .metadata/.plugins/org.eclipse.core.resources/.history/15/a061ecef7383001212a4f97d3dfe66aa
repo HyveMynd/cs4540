@@ -1,0 +1,11 @@
+<?php
+require 'Views/header.php'; 
+include 'Views/registrationLinks.php';
+?>
+<body>
+	<form action="contactInfo.php">
+		<h1>Lets Get Started with Your Resume!</h1>
+		<input type="submit" value="Get Started" />
+	</form>
+</body>
+</html>

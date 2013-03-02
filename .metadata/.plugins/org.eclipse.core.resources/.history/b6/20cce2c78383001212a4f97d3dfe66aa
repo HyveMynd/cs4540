@@ -1,0 +1,32 @@
+<?PHP
+require_once("../authentification/auth_config.php");
+
+if(isset($_POST['submitted']))
+{
+   if($fgmembersite->Login())
+   {
+        $fgmembersite->RedirectToURL("login-home.php");
+   }
+}
+include '../Views/header.php';
+?>
+</head>
+<body>
+
+<form id='login' action='login.php' method='post' accept-charset='UTF-8'>
+	<fieldset >
+	<legend>Login</legend>	 
+	<label for='username' >UserName*:</label>
+	<input type='text' name='username' id='username'  maxlength="50" required />
+	 
+	<label for='password' >Password*:</label>
+	<input type='password' name='password' id='password' maxlength="50" required />
+	 
+	<input type='button' value='Submit' onclick='validate()' />
+	 
+	</fieldset>
+</form>
+
+</body>
+<script src="../scripts/resume.js" type="text/javascript"></script>
+</html>

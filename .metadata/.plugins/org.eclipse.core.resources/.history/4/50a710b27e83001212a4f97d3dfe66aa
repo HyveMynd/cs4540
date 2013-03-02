@@ -1,0 +1,21 @@
+<?php
+
+class resumeSite {
+	var $userName;
+	var $userRole;
+	var $pageOrigin;
+	
+	function CheckLogin(){
+		
+	}
+	
+	function Login(){
+		
+	}
+	
+	function Logout(){
+		
+	}
+}
+
+?>

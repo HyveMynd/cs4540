@@ -1,0 +1,51 @@
+<?php
+
+require '../hidden/dbpassword.php';
+
+class resumeSite {
+	var $userName = "";
+	var $userPass = "";
+	var $userRole;
+	var $pageOrigin;
+	
+	function CheckLogin(){
+		if(!isset($_SESSION)){ session_start(); }
+		
+		if($userName == ""){
+			return false;
+		}
+		return true;
+	}
+	
+	function Login(){
+		
+	}
+	
+	function Logout(){
+		
+	}
+	
+	function SetPageOrigin(){
+		
+	}
+	
+	function RedirectUser(){
+		
+	}
+	
+	function RegisterUser(){
+		
+	}
+	
+	function RedirectToURL($url)
+	{
+		header("Location: $url");
+		exit;
+	}
+	
+	function CheckLoginInDB($username,$password){
+		
+	}
+}
+
+?>

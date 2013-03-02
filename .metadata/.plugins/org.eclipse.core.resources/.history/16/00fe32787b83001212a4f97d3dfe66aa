@@ -1,0 +1,18 @@
+<?php 
+function empHistoryArray(){
+	echo "<script type='text/javascript'>";
+	$startjs = json_encode($start);
+	$endjs = json_encode($end);
+	$descjs = json_encode($desc);
+	echo "var startArray = ". $startjs . ";\n";
+	echo "var endArray = ".$endjs . ";\n";
+	echo "var descArray = ".$descjs . ";\n";
+	
+	echo
+		"$('document').ready( function(){
+			populateFields(".count($_SESSION["startDate"]).");
+			attachRemove();
+		});
+		</script>";
+}
+?>

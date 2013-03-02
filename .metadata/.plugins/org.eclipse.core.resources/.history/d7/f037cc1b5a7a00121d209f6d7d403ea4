@@ -1,7 +1,0 @@
-<?php
-session_start();
-require 'db.php';
-
-echo "<script type=text/javascript >window.open('viewResume.php')</script>";
-require 'archive.php';
-?>

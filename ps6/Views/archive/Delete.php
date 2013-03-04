@@ -9,5 +9,5 @@ if (!$result)
 else
 	echo "<script type=text/javascript >alert('Operation Sucessful')</script>";
 
-echo "<meta http-equiv='REFRESH' content='0;url=archive.php'>"
+echo "<meta http-equiv='REFRESH' content='0;url=../archive.php'>"
 ?>

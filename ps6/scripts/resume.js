@@ -31,11 +31,43 @@ function removeSection(button){
 	$(button).closest($('section')).remove();
 }
 
+function ChangeRole(userID){
+	$("#role").val(userID);
+	$('form').submit();
+}
+
+function DeleteUser(userID){
+	$("#delete").val(userID);
+	$('form').submit();
+}
+
+function validateRegistration(){
+	if($("#password").val().length < 8){
+		highlightInput($("#password"));
+		alert("Password must be at least 8 characters long.");
+	}
+	else{
+		if ($("#password").val() != $("#retype").val()){
+			highlightInput($("#password"));
+			highlightInput($("#retype"));
+			alert("Passwords must match.");
+		}
+		else{
+			validate();
+		}
+	}
+}
+
+function Sanatize(data){
+	return data.text(data.val());
+}
+
 function validate(){
 	var invalid = false;
 	
 	//loop through inputs
 	$('input').each(function (){
+		Sanatize($(this));
 		if ($(this).val() == ''){
 			highlightInput($(this));
 			invalid = true;
@@ -44,6 +76,7 @@ function validate(){
 	
 	//loop through textareas
 	$('textarea').each(function (){
+		Sanatize($(this));
 		if ($(this).val() == ''){
 			highlightInput($(this));
 			invalid = true;

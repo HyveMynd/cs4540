@@ -1,0 +1,41 @@
+<?php
+require_once("../authentification/auth_config.php");
+$users = $resumeSite->GetUsers();
+include 'header.php';
+?>
+<body>
+<fieldset >
+<legend>User Administration</legend>	
+	<form method="post" action="admin.php">
+		<input type="hidden" name="submitted" value='-1' />
+		<input id='role' type="hidden" name="role" value='-1' />
+		<input id='delete' type="hidden" name="deleteUser" value='-1' />
+		<table>
+		<?php 
+		foreach ($users as $user){
+			echo 	"<tr>
+						<th>Full Name</th><th>Login</th><th>Role</th>
+					</tr>";
+			echo 	"<tr>
+						<td>".$user['RealName']."</td>
+						<td>".$user['Login']."</td>
+						<td>".$user['Role']."</td>
+						<td><input type='button' value='Change Role' onclick='ChangeRole(".$user['ID'].")'/></td>
+						<td><input type='button' value='Delete User' onclick='DeleteUser(".$user['ID'].")'/></td>
+					</tr>";		
+		}			
+		?>
+		</table>
+	</form>
+</fieldset>
+</body>
+<script>
+	function ChangeRole(userID){
+		
+	}
+
+	function DeleteUser(userID){
+
+	}
+</script>
+</html>

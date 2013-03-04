@@ -1,0 +1,20 @@
+<?php
+require_once("../authentification/auth_config.php");
+$users = $resumeSite->GetUsers();
+include 'header.php';
+?>
+<body>
+<fieldset >
+		<legend>User Administration</legend>	 
+		<table>
+		<?php 
+		foreach ($users as $user){
+			echo "<tr><th>Full Name</th><th>Login</th><th>Role</th></tr>";
+			echo "<tr><td>".$user['RealName']."</td><td>".$user['Login']."</td><td>".$user['Role']."</td></tr>";
+					
+		}			
+		?>
+		</table>
+</fieldset>
+</body>
+</html>

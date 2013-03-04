@@ -1,10 +1,10 @@
 <?php
 session_start();
-require 'db.php';
-$resume = viewResume($_REQUEST['name']);
+require '../../database/db.php';
+$resume = viewResume($_REQUEST['name'], $_REQUEST['login']);
 
 if ($resume == null){
-	require 'archive.php';	
+	require '../archive.php';	
 	echo "<script type=text/javascript >alert('Operation Failed. Resume does not exist.')</script>";
 	exit();
 }
@@ -19,9 +19,9 @@ $descs = $resume['empHistory']['descs'];
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="../../style/style.css" type="text/css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-<script src=resume.js type="text/javascript"></script>
+<script src="../../scripts/resume.js" type="text/javascript"></script>
 <title>Your Resume</title>
 </head>
 <body class='pos'>

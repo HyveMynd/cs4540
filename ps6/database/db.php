@@ -1,21 +1,18 @@
 <?php
-require '../hidden/dbpassword.php';
-
 // Opens and returns a DB connection
 function openDBConnection () {
-	global $dbpassword;
+	$dbpassword = '00733037';
+	$dbUser = 'monroy_sw';
+	$dbHost = "mysql:host=atr.eng.utah.edu;dbname=ps6_monroy";
 	$DBH = new PDO($dbHost, $dbUser, $dbpassword);
 	$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $DBH;
 }
 
-function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc){
-// 	echo $name.$phone.$addr.$position;
-	
+function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, $enddate, $desc){	
 	try{
 		//get id
 		$id = getResumeID($resumeName);
-		
 		if ($id <= 0){
 			createResume($resumeName);
 			$id = getResumeID($resumeName);
@@ -36,21 +33,29 @@ function storeResume ($resumeName, $name, $phone, $addr, $position, $startdate, 
 }
 
 function createResume($resumeName){
+	if(!isset($_SESSION))
+		session_start();
 	//create resume if not in database
+	$uid = GetUserID($_SESSION['login']);
 	$DBH = openDBConnection();
 	$DBH->beginTransaction();
-	$query2 = $DBH->prepare("insert into ResumeNames (ResumeName) values (?)");
+	$query2 = $DBH->prepare("insert into ResumeNames (ResumeName, UserID) values (?,?)");
 	$query2->bindValue(1, $resumeName);
+	$query2->bindValue(2, $uid);
 	$query2->execute();
 	return $DBH->commit();
 }
 
 function getResumeID ($resumeName){
-	//get the ResumeID
+	if(!isset($_SESSION))
+		session_start();
+	//get the ResumeID and UserID
+	$uid = GetUserID($_SESSION['login']);
 	$DBH = openDBConnection();
 	$DBH->beginTransaction();
-	$stmt = $DBH->prepare("select * from ResumeNames where ResumeName=?");
+	$stmt = $DBH->prepare("select * from ResumeNames where ResumeName=? AND UserID=?");
 	$stmt->bindValue(1, $resumeName);
+	$stmt->bindValue(2, $uid);
 	$stmt->execute();
 	$rows = $stmt->fetchAll();
 	$DBH->commit();
@@ -62,8 +67,25 @@ function getResumeID ($resumeName){
 	return $rows[0]['ResumeID'];
 }
 
+function GetResumeIDWithLogin ($resumeName, $login){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	$uid = GetUserID($login);
+	$stmt = $DBH->prepare("select * from ResumeNames where ResumeName=? AND UserID=?");
+	$stmt->bindValue(1, $resumeName);
+	$stmt->bindValue(2, $uid);
+	$stmt->execute();
+	$rows = $stmt->fetchAll();
+	$DBH->commit();
+
+	//not found
+	if (count($rows) == 0)
+		return -1;
+
+	return $rows[0]['ResumeID'];
+}
+
 function storeContactInfo ($id, $name, $phone, $addr){
-	global $insert;
 	$DBH = openDBConnection();
 	$DBH->beginTransaction();
 
@@ -83,7 +105,6 @@ function storeContactInfo ($id, $name, $phone, $addr){
 }
 
 function storePositionSought ($id, $position){
-	global $insert;
 	$DBH = openDBConnection();
 	$DBH->beginTransaction();
 	
@@ -149,9 +170,8 @@ function loadResume ($resumeName){
 	return true;
 }
 
-function viewResume ($resumeName){
-	$id = getResumeID($resumeName);
-	
+function viewResume ($resumeName, $login){
+	$id = GetResumeIDWithLogin($resumeName, $login);
 	if ($id <= 0)
 		return null;
 	
@@ -268,5 +288,101 @@ function reportDBError ($exception) {
 	fclose($file);
 	require 'error.php';
 	exit();
+}
+
+function GetUserID($login){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q = $DBH->prepare("select * from RegisteredUsers where Login=?");
+	$q->bindValue(1, $login);
+	$q->execute();
+	$rows = $q->fetchAll();
+	
+	$DBH->commit();
+	if (count($rows) == 0)
+		return -1;
+	return $rows[0]['ID'];
+}
+
+function CreateNewUser($realName, $login, $password, $role){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q1 = $DBH->prepare("insert into RegisteredUsers (RealName, Login, Password, Role) values (?,?,?,?)");
+	$q1->bindValue(1, $realName);
+	$q1->bindValue(2, $login);
+	$q1->bindValue(3, $password);
+	$q1->bindValue(4, $role);
+	
+	$q1->execute();
+	return $DBH->commit();
+}
+
+function CheckValidCredentials($login, $password){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q1 = $DBH->prepare("select * from RegisteredUsers where Login=? AND Password=?");
+	$q1->bindValue(1, $login);
+	$q1->bindValue(2, $password);
+	$q1->execute();
+	$rows = $q1->fetchAll();
+	$DBH->commit();
+	
+	if(count($rows) == 0)
+		return null;
+	return $rows[0];
+}
+
+function AllUsers(){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q1 = $DBH->prepare("select * from RegisteredUsers");
+	$q1->execute();
+	$rows = $q1->fetchAll();
+	$DBH->commit();
+	return $rows;
+}
+
+function GetRole($uid){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q1 = $DBH->prepare("select * from RegisteredUsers where ID=?");
+	$q1->bindValue(1, $uid);
+	$q1->execute();
+	$rows = $q1->fetchAll();
+	$DBH->commit();
+	return $rows[0]['Role'];
+}
+
+function ChangeRole($uid){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$role = GetRole($uid);
+	
+	if($role == "client")
+		$role = "admin";
+	else 
+		$role = "client";
+	
+	$q1 = $DBH->prepare("update RegisteredUsers set Role=? where ID=?");
+	$q1->bindValue(1, $role);
+	$q1->bindValue(2, $uid);
+	$q1->execute();
+	return 	$DBH->commit();
+}
+
+function DeleteUser($uid){
+	$DBH = openDBConnection();
+	$DBH->beginTransaction();
+	
+	$q1 = $DBH->prepare("delete from RegisteredUsers where ID=?");
+	$q1->bindValue(1, $uid);
+	$q1->execute();
+	return $DBH->commit();
 }
 ?>

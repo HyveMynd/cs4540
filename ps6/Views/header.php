@@ -7,3 +7,5 @@ $docRoot = $_SERVER['DOCUMENT_ROOT'].'/cs4540/ps6/';
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 <title>Resume Helper</title>
+<link rel="stylesheet" href="../style/style.css" type="text/css" />
+</head>

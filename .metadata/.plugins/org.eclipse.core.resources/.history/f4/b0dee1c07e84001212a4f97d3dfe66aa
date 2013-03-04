@@ -1,0 +1,35 @@
+<?php
+require_once("../authentification/auth_config.php");
+if(isset($_POST['submitted']))
+{
+	if($resumeSite->Login())
+	{
+		$resumeSite->RedirectToOrigin();
+	}
+	else{
+		echo "<script type=text/javascript >alert('Operation Failed. Bad Login.')</script>";
+	}
+}
+else{
+	$resumeSite->SetPageOrigin();
+}
+include 'header.php';
+?>
+<body>
+<form action="register.php" method="post">
+	<fieldset >
+		<legend>Register</legend>	 
+		<input type='hidden' name='submitted' value='1'/>
+		<label for='username' >UserName*:</label>
+		<input type='text' name='loginName' id='username'  maxlength="50" required />
+		 
+		<label for='password' >Password*:</label>
+		<input type='password' name='loginPass' id='password' maxlength="50" required />
+		 
+		<input type='button' value='Login' onclick='validate()' />
+		<input type='button' value='Cancel' onclick='history.go(-1)' />
+	</fieldset>
+</form>
+</body>
+<script type="text/javascript" src="../scripts/resume.js"></script>
+</html>

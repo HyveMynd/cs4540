@@ -30,7 +30,7 @@ include '../Views/header.php';
 		<input type='password' name='loginPass' id='password' maxlength="50" required />
 		 
 		<input type='button' value='Login' onclick='validate()' />
-		<input type='button' value='Cancel' onclick='history.go(-1)' />
+		<input type='button' value='Cancel' onclick="javascript: window.location = '<?php echo $_SESSION['origin']?>'" />
 	</fieldset>
 </form>
 

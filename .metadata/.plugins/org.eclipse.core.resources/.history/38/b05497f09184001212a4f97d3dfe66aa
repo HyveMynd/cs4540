@@ -1,0 +1,3 @@
+<?php
+require_once("../authentification/auth_config.php");
+$user = $resumeSite->GetUsers();

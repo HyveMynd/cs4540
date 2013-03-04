@@ -1,0 +1,39 @@
+Sun, 03 Mar 2013 21:46:10 +0100
+invalid data source name#0 C:\xampp\htdocs\cs4540\ps6\database\db.php(7): PDO->__construct('', NULL, '00733037')
+#1 C:\xampp\htdocs\cs4540\ps6\database\db.php(50): openDBConnection()
+#2 C:\xampp\htdocs\cs4540\ps6\database\db.php(17): getResumeID('asd')
+#3 C:\xampp\htdocs\cs4540\ps6\Views\archive\Store.php(15): storeResume('asd', 'asd', 'asd', 'asd', 'asdasd', Array, Array, Array)
+#4 C:\xampp\htdocs\cs4540\ps6\Views\archive\Switch.php(4): require('C:\xampp\htdocs...')
+#5 {main}
+
+Sun, 03 Mar 2013 21:46:43 +0100
+invalid data source name#0 C:\xampp\htdocs\cs4540\ps6\database\db.php(7): PDO->__construct('', NULL, '00733037')
+#1 C:\xampp\htdocs\cs4540\ps6\database\db.php(50): openDBConnection()
+#2 C:\xampp\htdocs\cs4540\ps6\database\db.php(17): getResumeID('asd')
+#3 C:\xampp\htdocs\cs4540\ps6\Views\archive\Store.php(15): storeResume('asd', 'asd', 'asd', 'asd', 'asdasd', Array, Array, Array)
+#4 C:\xampp\htdocs\cs4540\ps6\Views\archive\Switch.php(4): require('C:\xampp\htdocs...')
+#5 {main}
+
+Sun, 03 Mar 2013 21:47:58 +0100
+invalid data source name#0 C:\xampp\htdocs\cs4540\ps6\database\db.php(9): PDO->__construct('', NULL, '00733037')
+#1 C:\xampp\htdocs\cs4540\ps6\database\db.php(52): openDBConnection()
+#2 C:\xampp\htdocs\cs4540\ps6\database\db.php(19): getResumeID('asd')
+#3 C:\xampp\htdocs\cs4540\ps6\Views\archive\Store.php(15): storeResume('asd', 'asd', 'asd', 'asd', 'asdasd', Array, Array, Array)
+#4 C:\xampp\htdocs\cs4540\ps6\Views\archive\Switch.php(4): require('C:\xampp\htdocs...')
+#5 {main}
+
+Sun, 03 Mar 2013 21:48:03 +0100
+invalid data source name#0 C:\xampp\htdocs\cs4540\ps6\database\db.php(9): PDO->__construct('', NULL, '00733037')
+#1 C:\xampp\htdocs\cs4540\ps6\database\db.php(52): openDBConnection()
+#2 C:\xampp\htdocs\cs4540\ps6\database\db.php(19): getResumeID('asd')
+#3 C:\xampp\htdocs\cs4540\ps6\Views\archive\Store.php(15): storeResume('asd', 'asd', 'asd', 'asd', 'asdasd', Array, Array, Array)
+#4 C:\xampp\htdocs\cs4540\ps6\Views\archive\Switch.php(4): require('C:\xampp\htdocs...')
+#5 {main}
+
+Mon, 04 Mar 2013 05:41:30 +0100
+SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens#0 C:\xampp\htdocs\cs4540\ps6\database\db.php(43): PDOStatement->execute()
+#1 C:\xampp\htdocs\cs4540\ps6\database\db.php(17): createResume('andres')
+#2 C:\xampp\htdocs\cs4540\ps6\Views\archive\Store.php(15): storeResume('andres', 'andres', '661', '765 molasses', 'my pos', Array, Array, Array)
+#3 C:\xampp\htdocs\cs4540\ps6\Views\archive\Switch.php(4): require('C:\xampp\htdocs...')
+#4 {main}
+

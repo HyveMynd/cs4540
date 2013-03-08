@@ -1,3 +1,0 @@
-<?php echo "<script type='text/javascript' src=".$docRoot."resume.js ></script>"?>
-<?php echo "<script type='text/javascript' src=".$docRoot."gen_validatorv31.js ></script>"?>
-</html>

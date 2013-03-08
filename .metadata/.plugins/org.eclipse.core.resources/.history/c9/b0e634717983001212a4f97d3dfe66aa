@@ -1,0 +1,3 @@
+<?php
+$docRoot = $_SERVER['DOCUMENT_ROOT'].'/cs4540/ps6/';
+?>

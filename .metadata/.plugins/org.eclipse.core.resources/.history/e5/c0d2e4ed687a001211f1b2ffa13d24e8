@@ -1,0 +1,22 @@
+<?php
+switch ($_REQUEST['submit']){
+	case'Store':
+		require 'Store.php';
+		$_SESSION['resumeName'] = $_REQUEST['name'];
+		$name = $_SESSION['name'];
+		$phone =  $_SESSION['phone'];
+		$addr = $_SESSION['address'];
+		$position = $_SESSION['position'];
+		$startdate = $_SESSION['startDate'];
+		$enddate = $_SESSION['endDate'];
+		$desc = $_SESSION['desc'];
+		break;
+	case'Delete':
+		require 'Delete.php';
+		break;
+	case'Load':
+		require'Load.php';
+		$_SESSION['resumeName'] = $_REQUEST['name'];
+		break;
+}
+?>

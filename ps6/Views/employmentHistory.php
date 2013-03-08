@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../Views/header.php';
-include $docRoot.'Views/registrationLinks.php';
+include 'registrationLinks.php';
 //store arrays if the sessions are not set
 if(isset($_REQUEST['startDate'])){
 	$_SESSION["startDate"] = $_REQUEST["startDate"];

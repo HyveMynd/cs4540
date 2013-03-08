@@ -1,0 +1,88 @@
+<?php
+class resumeSite {
+	function CheckLogin(){
+		if(!isset($_SESSION)){ session_start(); }
+		
+		if(isset($_SESSION['login'])){
+			return true;
+		}
+		return false;
+	}
+	
+	function Login(){
+		$login = $_POST['loginName'];
+		$password = $_POST['loginPass'];
+		if($this->CheckLoginInDB($login, $password))
+			return true;
+		else
+			return false;
+	}
+	
+	function Logout(){
+		session_destroy();
+		$this->RedirectToURL("../Views/contactInfo.php");
+	}
+	
+	function SetPageOrigin(){
+		session_start();
+		$_SESSION['origin'] = $_SERVER['HTTP_REFERER'];
+	}
+	
+	function RedirectToOrigin(){
+		session_start();
+		$this->RedirectToURL($_SESSION['origin']);
+	}
+	
+	function RegisterUser(){
+		require '../database/db.php';
+		$realName = $_REQUEST['fullName'];
+		$login = $_REQUEST['login'];
+		$password = $_REQUEST['password'];
+		$role = "client";
+		if(GetUserID($login) > 0)
+			return false;
+		else{
+			$this->SetRole($role);
+			return CreateNewUser($realName, $login, $password, $role);
+		}
+	}
+	
+	function SetRole($role){
+		start_session();
+		$_SESSION['role'] = $role;
+	}
+	
+	function CheckRole(){
+		return false;
+	}
+	
+	function RedirectToURL($url)
+	{
+		header("Location: $url");
+		exit;
+	}
+	
+	function SaveUserName($login){
+		session_start();
+		$_SESSION['login'] = $login;
+	}
+	
+	function CheckLoginInDB(){
+		session_start();
+		require '../database/db.php';
+		$badLogin = false;
+		$login = CheckValidCredentials($login, $password)
+		if (GetUserID($_SESSION['login']) < 0){
+			$userName = "";
+			$userPass = "";
+			return false;
+		}
+		$login="test";
+		
+		
+		$this->SaveUserName($login);
+		return true;
+	}
+}
+
+?>

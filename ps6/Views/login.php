@@ -14,6 +14,9 @@ if(isset($_POST['submitted']))
 else{
 	$resumeSite->SetPageOrigin();
 }
+require_once('../helper/functions.php');
+if (!usingHTTPS())
+	redirectToHTTPS();
 include '../Views/header.php';
 ?>
 </head>

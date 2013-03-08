@@ -1,8 +1,8 @@
 <?php
 session_start();
 include '../Views/header.php';
-include $docRoot.'Views/registrationLinks.php';
-require $docRoot.'helper/functions.php';
+include 'registrationLinks.php';
+require '../helper/functions.php';
 ?>
 <body class='contact'>
 	<form action="contactInfo.php" method="post">

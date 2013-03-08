@@ -1,0 +1,28 @@
+<?php 
+if (isset($_SESSION['login']))
+	LoggedIn();
+else
+	NotLoggedIn();
+
+if ($_SESSION['role'] == "admin")
+	ShowAdmin();
+
+function LoggedIn(){
+	echo "<span class='regLinks' style='display: block; text-align: right; color: blue;'>
+		<a href='../authentification/logout.php' >[Logout]</a>
+		</span>";
+}
+
+function NotLoggedIn(){
+	echo "<span class='regLinks' style='display: block; text-align: right; color: blue;'>
+		<a href='../Views/login.php' >[Login]</a>
+		<a href='register.php' >[Register]</a>
+		</span>";
+}
+
+function ShowAdmin(){
+	echo "<span class='regLinks' style='display: block; text-align: right; color: blue;'>
+		<a href='admin.php' >[Admin]</a>
+		</span>";
+}
+?>

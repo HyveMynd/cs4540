@@ -11,7 +11,7 @@ if(!isset($_SESSION['login']))
 
 include 'header.php';
 include 'registrationLinks.php';
-require $docRoot.'helper/functions.php';
+require '../helper/functions.php';
 ?>
 <body class='archive'>
 	<h1>Archive Resume</h1>

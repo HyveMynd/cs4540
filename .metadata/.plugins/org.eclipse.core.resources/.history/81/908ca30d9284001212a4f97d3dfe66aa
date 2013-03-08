@@ -1,0 +1,20 @@
+<?php
+require_once("../authentification/auth_config.php");
+$user = $resumeSite->GetUsers();
+include 'header.php';
+?>
+<body>
+<fieldset >
+		<legend>Login</legend>	 
+		<input type='hidden' name='submitted' value='1'/>
+		<label for='username' >UserName*:</label>
+		<input type='text' name='loginName' id='username'  maxlength="50" required />
+		 
+		<label for='password' >Password*:</label>
+		<input type='password' name='loginPass' id='password' maxlength="50" required />
+		 
+		<input type='button' value='Login' onclick='validate()' />
+		<input type='button' value='Cancel' onclick='history.go(-1)' />
+</fieldset>
+</body>
+</html>

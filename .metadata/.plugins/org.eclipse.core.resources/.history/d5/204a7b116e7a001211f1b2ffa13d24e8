@@ -1,9 +1,0 @@
-<?php
-require 'db.php';
-
-echo "<script type='text/javascript' >
-		window.open('resume.php?name=' + '".$_REQUEST['name']."');
-		</script>";
-
-require 'archive.php';
-?>

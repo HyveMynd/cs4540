@@ -1,4 +1,0 @@
-<?php
-echo "<script type=text/javascript >window.open('resume.php')</script>";
-require 'archive.php';
-?>

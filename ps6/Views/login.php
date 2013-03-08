@@ -14,7 +14,6 @@ if(isset($_POST['submitted']))
 else{
 	$resumeSite->SetPageOrigin();
 }
-//comment
 require_once('../helper/functions.php');
 if (!usingHTTPS())
 	redirectToHTTPS();

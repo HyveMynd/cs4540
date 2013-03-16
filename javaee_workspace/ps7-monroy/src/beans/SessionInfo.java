@@ -1,16 +1,21 @@
 package beans;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class SessionInfo {
 	private String sessionId;
-	private Calendar dateTime;
+	private Date dateTime;
 	private String url;
 	private String fullUrl;
-	private BrowserType browser;
+	private String browser;
 	
-	public SessionInfo (String sid, Calendar datetime, String url, 
-			String fullUrl, BrowserType browser){
+	public SessionInfo (String sid, Date datetime, String url, 
+			String fullUrl, String browser){
 		this.sessionId = sid;
 		this.dateTime = datetime;
 		this.url = url;
@@ -26,11 +31,11 @@ public class SessionInfo {
 		this.sessionId = sessionId;
 	}
 
-	public Calendar getDateTime() {
+	public Date getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(Calendar dateTime) {
+	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
 
@@ -50,11 +55,11 @@ public class SessionInfo {
 		this.fullUrl = fullUrl;
 	}
 
-	public BrowserType getBrowser() {
+	public String getBrowser() {
 		return browser;
 	}
 
-	public void setBrowser(BrowserType browser) {
+	public void setBrowser(String browser) {
 		this.browser = browser;
 	}
 
@@ -82,5 +87,12 @@ public class SessionInfo {
 		} else if (!sessionId.equals(other.sessionId))
 			return false;
 		return true;
+	}
+	
+	public static SessionInfo CreateSessionInfo(HttpSession session, HttpServletRequest request) {
+		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("GMT-07:00"));
+		SessionInfo sesh = new SessionInfo(session.getId(), today.getTime(), 
+				request.getRequestURI(), request.getRequestURL().toString(), request.getHeader("user-agent"));
+		return 	sesh;
 	}
 }

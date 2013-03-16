@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Index</title>
+</head>
+<body>
+
+<ul>
+<li> <a href="ShowCount">Displays session request count</a></li>
+<li> <a href="page.html">Another page</a>
+</ul>
+
+</body>
+</html>

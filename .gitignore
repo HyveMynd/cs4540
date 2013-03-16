@@ -1,3 +1,10 @@
 .metadata/
 .metadata/*
-
+javaee_workspace/JavaDemo/
+javaee_workspace/JSPa/
+javaee_workspace/JSPb/
+javaee_workspace/JSPc/
+javaee_workspace/ps7-monroy/.*
+javaee_workspace/ps7-monroy/.settings/
+javaee_workspace/Servers/.settings/
+javaee_workspace/Servers/.*

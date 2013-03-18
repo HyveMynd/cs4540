@@ -13,12 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="X:/Downloads/coollection-0.2.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="X:/Downloads/querydsl-collections-2.9.0-full-deps.zip"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/cs4540/javaee_workspace/ps7-monroy/WebContent/WEB-INF/lib/coollection-0.2.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

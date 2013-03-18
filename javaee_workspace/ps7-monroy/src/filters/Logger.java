@@ -4,14 +4,14 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import beans.AppHistory;
+import helpers.AppHistory;
 import beans.SessionInfo;
 
 /**
  * This is a filter.  When a page request is made of this application, Tomcat will
  * call the doFilter method before processing the request.  
  */
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"*"})
 public class Logger implements Filter {
 
 	/**

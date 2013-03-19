@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import helpers.AppHistory;
+import helpers.ServletHelpers;
 
 /**
  * Servlet implementation class SessionHistory
@@ -36,7 +38,7 @@ public class SessionHistory extends HttpServlet {
 		if (rate != null)
 			response = helper.doRefresh(request, response);
 		
-		request.setAttribute("sessionHistory", AppHistory.getHistoryForSession(session.getId()));
+		request = setAllAttributes(request, session);
 		request.getRequestDispatcher("/WEB-INF/views/SessionHistory.jsp").forward(request, response);
 	}
 
@@ -44,6 +46,7 @@ public class SessionHistory extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
 		String submit = request.getParameter("submit");
 
 		String rate = request.getParameter("rate");
@@ -58,8 +61,14 @@ public class SessionHistory extends HttpServlet {
 			break;
 		}
 		
-		request.setAttribute("sessionHistory", AppHistory.getHistoryForSession(request.getSession().getId()));
+		request = setAllAttributes(request, session);
 		request.getRequestDispatcher("/WEB-INF/views/SessionHistory.jsp").forward(request, response);
+	}
+	
+	private HttpServletRequest setAllAttributes(HttpServletRequest request, HttpSession session){
+		helper.setPreference(request, session, getServletContext());
+		request.setAttribute("sessionHistory", AppHistory.getHistoryForSession(session.getId()));
+		return request;
 	}
 	
 }

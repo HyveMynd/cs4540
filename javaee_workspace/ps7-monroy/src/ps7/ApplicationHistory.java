@@ -1,6 +1,7 @@
 package ps7;
 
 import helpers.AppHistory;
+import helpers.ServletHelpers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ApplicationHistory
@@ -29,14 +31,14 @@ public class ApplicationHistory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession(true);
+		HttpSession session = request.getSession(true);
 
 		String rate = request.getParameter("rate");
 		if (rate != null)
 			response = helper.doRefresh(request, response);
 		
 		
-		request = setAllAttributes(request);
+		request = setAllAttributes(request, session);
 		request.getRequestDispatcher("/WEB-INF/views/ApplicationHistory.jsp").forward(request, response);
 	}
 
@@ -44,6 +46,7 @@ public class ApplicationHistory extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
 		String submit = request.getParameter("submit");
 
 		String rate = request.getParameter("rate");
@@ -58,11 +61,12 @@ public class ApplicationHistory extends HttpServlet {
 			break;
 		}
 		
-		request = setAllAttributes(request);
+		request = setAllAttributes(request, session);
 		request.getRequestDispatcher("/WEB-INF/views/ApplicationHistory.jsp").forward(request, response);	
 	}
 	
-	private HttpServletRequest setAllAttributes(HttpServletRequest request) {
+	private HttpServletRequest setAllAttributes(HttpServletRequest request, HttpSession session) {
+		helper.setPreference(request, session, getServletContext());
 		request.setAttribute("applicationHistory", AppHistory.getApplicationHistory());
 		request.setAttribute("browsers", AppHistory.getCountDistinctBrowsers());
 		request.setAttribute("uniqueSessions", AppHistory.getCountDistinctSession());

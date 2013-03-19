@@ -55,7 +55,13 @@ table,th,td {
 </body>
 <script type="text/javascript">
 $(document).ready(function (){
+	// Sticky
 	$("#rateMenu").val('${param.rate}');
+	
+	// Sytles
+	$("body").css("background-color", "${preferences.bgColor}");
+	$("body").css("color", "${preferences.fontColor}");
+	$("body").css("font-size", "${preferences.fontSize}");
 });
 </script>
 </html>

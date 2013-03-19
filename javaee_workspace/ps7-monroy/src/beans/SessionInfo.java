@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SessionInfo {
-	private String sessionId;
-	private Date dateTime;
-	private String url;
-	private String fullUrl;
-	private String browser;
+	private final String sessionId;
+	private final Date dateTime;
+	private final String url;
+	private final String fullUrl;
+	private final String browser;
 	
-	public SessionInfo (String sid, Date datetime, String url, 
+	private SessionInfo (String sid, Date datetime, String url, 
 			String fullUrl, String browser){
 		this.sessionId = sid;
 		this.dateTime = datetime;
@@ -27,40 +27,20 @@ public class SessionInfo {
 		return sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
 	public Date getDateTime() {
 		return dateTime;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
 	}
 
 	public String getUrl() {
 		return url;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public String getFullUrl() {
 		return fullUrl;
 	}
 
-	public void setFullUrl(String fullUrl) {
-		this.fullUrl = fullUrl;
-	}
-
 	public String getBrowser() {
 		return browser;
-	}
-
-	public void setBrowser(String browser) {
-		this.browser = browser;
 	}
 
 	@Override

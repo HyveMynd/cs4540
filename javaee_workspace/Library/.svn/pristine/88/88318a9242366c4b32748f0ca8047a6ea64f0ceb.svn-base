@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Gutenberg</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>    
+<script>
+
+// Populates the page with new data provided by the servlet
+function populate (result) {
+	$('#booklist').empty();
+	$('#patron').html(result.patron);
+	var books = result.books;
+	var i = 0;
+	while (i < books.length) {
+		$('#booklist').append('<li>' + books[i] + '</li>');
+		i++;
+	}
+}
+
+</script>
+</head>
+<body>
+
+<p>Try card numbers 1, 2, 3, and 4</p>
+
+<!-- Ajax call to obtain checked-out books -->
+Card number:
+<input type='text' size='5' 
+ onchange="$.get('CheckedOut', {idNumber: this.value}, populate);"/>
+
+<p>
+Patron: <span id="patron"></span>
+</p>
+
+<ul id="booklist"></ul>
+
+
+
+
+</body>
+</html>

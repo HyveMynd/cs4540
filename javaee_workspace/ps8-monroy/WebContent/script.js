@@ -1,8 +1,7 @@
-function ServerCall(url){
+function ServerCall(url, callback){
 	$.ajax({
 		url:url,
-		success:func(result),
-		data:"",
+		success:callback,
 		type:"GET"
 	});
 }
@@ -17,4 +16,8 @@ function loadNextTenFromLibrary(){
 
 function loadPreviousTenFromLibarary(){
 	
+}
+
+function load(data){
+	alert("GOT HERE!");
 }

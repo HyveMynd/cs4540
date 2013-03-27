@@ -6,19 +6,23 @@
 <title>Welcome!</title>
 </head>
 <body>
-<table>
-	<tr>
-		<th><a href="">Title</a></th>
-		<th><a href="">Author</a></th>
-		<th>Availability</th>
-	</tr>
-</table>
-<input type="text" name="search" />
-<h4>Search by:</h4>
-<input type="radio" name="searchType" value="title" checked/>Title<br>
-<input type="radio" name="searchType" value="author" />Author<br>
-<input type="button" name="next" value="Next"/>
-<input type="button" name="previous" value="Previous"/>
-<input type="button" name="reset" value="Reset"/>
+<form method="GET" action="Library">
+	<table>
+		<tr>
+			<th><a href="">Title</a></th>
+			<th><a href="">Author</a></th>
+			<th>Availability</th>
+		</tr>
+	</table>
+	<input type="text" name="search" />
+	<h4>Search by:</h4>
+	<input type="radio" name="searchType" value="title" checked/>Title<br>
+	<input type="radio" name="searchType" value="author" />Author<br>
+	<input type="button" name="next" value="Next"/>
+	<input type="button" name="previous" value="Previous"/>
+	<input type="button" name="reset" value="Reset"/>
+	<input type="button" name="test" value="test" onclick="ServerCall('Library', load)"/>
+</form>
 </body>
+<script src=script.js></script>
 </html>

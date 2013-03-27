@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Gutenberg</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>    
+
+<script>
+
+// The offset (in multiples of 5) from the beginning of the list
+var currentOffset = 0;
+
+// Makes the AJAX call
+function getMoreBooks (offset) {
+	$.get('GetBooks', {offset: offset, filter: $('#filter').val()}, refresh);
+}
+
+// Refreshes the list of books and activates/deactivates the buttons
+function refresh (result) {
+	var contents = "";
+	for (var i = 0; i < result.books.length; i++) {
+		contents += "<tr><td>" + result.books[i] + "</td></tr>\n";
+	}
+	$('#booktable').html(contents);
+	if (result.atBottom) {
+		$('#next').attr('disabled', 'disabled');
+	}
+	else {
+		$('#next').removeAttr('disabled');
+	}
+	if (result.atTop) {
+		$('#previous').attr('disabled', 'disabled');
+	}
+	else {
+		$('#previous').removeAttr('disabled');
+	}
+	currentOffset = result.newOffset;
+	
+	
+}
+
+// Go to next batch
+function next () {
+	getMoreBooks(currentOffset+1);
+}
+
+// Go to previous batch
+function prev () {
+	getMoreBooks(currentOffset-1);
+}
+</script>
+
+
+</head>
+<body onload="getMoreBooks(0);">
+
+<p>Search: <input type="text" id="filter" size="10" 
+                  onKeyUp="getMoreBooks(0);"/></p>
+
+Books:
+
+<table border="1" id="booktable">
+</table>
+
+<p><input type="button" value="Next" id="next" onclick="next();"/></p>
+
+<p><input type="button" value="Previous" id="previous" onclick="prev();"/></p>
+
+</body>
+
+</html>

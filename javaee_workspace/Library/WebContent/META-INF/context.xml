@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+
+  <!-- Together with a corresponding entry in web.xml, this configures -->
+  <!-- a data source that reads from a database. -->
+       
+  <Resource
+    name="jdbc/LibraryDB"
+    auth="Container"
+    type="javax.sql.DataSource"
+    driverClassName="com.mysql.jdbc.Driver"
+    url="jdbc:mysql://atr.eng.utah.edu/library"
+    username="cs4540-software"
+    password="hello"
+    maxActive="8"
+    maxIdle="4"
+    maxWait="10000"
+   />
+
+
+</Context>

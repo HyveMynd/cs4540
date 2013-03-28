@@ -1,9 +1,13 @@
 package db;
 
-import java.sql.*;
-import javax.servlet.http.*;
-import javax.naming.*;
-import javax.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.servlet.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class Utils {
 

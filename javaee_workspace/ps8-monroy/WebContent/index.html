@@ -5,14 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Welcome!</title>
 </head>
-<body>
+<body onload="getMoreBooks();">
 <form method="GET" action="Library">
-	<table>
-		<tr>
-			<th><a href="">Title</a></th>
-			<th><a href="">Author</a></th>
-			<th>Availability</th>
-		</tr>
+	<table border="1" id="booktable">
 	</table>
 	<input type="text" name="search" />
 	<h4>Search by:</h4>
@@ -21,7 +16,7 @@
 	<input type="button" name="next" value="Next"/>
 	<input type="button" name="previous" value="Previous"/>
 	<input type="button" name="reset" value="Reset"/>
-	<input type="button" name="test" value="test" onclick="ServerCall('Library', load)"/>
+	<input type="button" name="test" value="test" onclick="ServerCall('GetBooks', load('got message'))"/>
 </form>
 </body>
 <script src=script.js></script>

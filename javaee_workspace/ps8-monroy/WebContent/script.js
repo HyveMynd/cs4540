@@ -6,6 +6,10 @@ function ServerCall(url, callback){
 	});
 }
 
+function getMoreBooks(){
+	$.get('GetBooks', {offset: 0, filter: ""}, load);
+}
+
 function loadFirstTenFromLibrary(){
 	
 }
@@ -18,6 +22,10 @@ function loadPreviousTenFromLibarary(){
 	
 }
 
-function load(data){
-	alert("GOT HERE!");
+function load(result){
+	var contents = "";
+	for (var i = 0; i < result.books.length; i++) {
+		contents += "<tr><td>" + result.books[i] + "</td></tr>\n";
+	}
+	$('#booktable').html(contents);
 }

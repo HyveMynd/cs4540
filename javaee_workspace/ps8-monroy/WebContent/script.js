@@ -1,7 +1,6 @@
 $(document).ready(function (){
 	//register handlers
 	$("#filter").keyup(getMoreBooks);
-	$("#loggedin").val("hello");
 });
 
 function getBooks(){
@@ -47,7 +46,7 @@ function loadBooks(result){
 	for (var i = 0; i < result.books.length; i++) {
 		contents += "<tr><td>" + result.books[i].title + "</td>" +
 				"<td>" + result.books[i].author + "</td>" +
-				"<td><input type='button' name='" + result.books[i].id + "' value='Checkout' /></td></tr>\n";
+				"<td><input type='button' name='" + result.books[i].id + "' value='Checkout' onclick='checkOut(this)'/></td></tr>\n";
 	}
 	$('#booktable').html(contents);
 	handleButtons(result);
@@ -56,12 +55,13 @@ function loadBooks(result){
 
 function checkStatuses(result){
 	for (var i = 0; i < result.books.length; i++)
-		if (result.books[i].checkedOut)
+		if (result.books[i].checkedOut || $("#id").val() < 0)
 			disableCheckoutButton(result.books[i].id);
 }
 
 function disableCheckoutButton(id){
 	$("input:button[name='"+id+"']").attr('disabled', 'disabled');
+	$("input:button[name='"+id+"']").val("Checked Out");
 }
 
 function handleButtons(result){
@@ -82,34 +82,84 @@ function handleButtons(result){
 /*---------Login functions-----------*/
 
 function login(){
-	var login = $("login").val();
-	var register = false;
+	var login = $("#login").val();
+	var register = 0;
 	$.ajax({
 		url: "Patrons",
 		data: {login: login, register: register},
-		callback: loggedIn,
+		success: loggedIn,
 		type: "POST"
 	});
 }
 
 function register(){
-	var login = $("login").val();
-	var register = false;
+	var login = $("#login").val();
+	var register = 1;
 	$.ajax({
 		url: "Patrons",
 		data: {login: login, register: register},
-		callback: loggedIn,
+		success: loggedIn,
 		type: "POST"
 	});
 }
 
 function loggedIn (data){
 	if (!data.status){
-		$("#loggedin").val(data.message);
+		$("#loggedInMessage").text(data.message);
 	}
 	else{
-		$("#login").css("display", "hidden");
-		$("#loggedin").val(data.message);
+		hideLogin(data);
+		setId(data);
+		getMoreBooks();
 	}
+}
+
+function hideLogin(data){
+	$("#loginArea").hide();
+	$("#loggedInMessage").css("color", "black");
+	$("#loggedInMessage").text(data.message);
+}
+
+function setId(data){
+	$("#id").val(data.id);
+}
+
+/*-----------Checkout----------*/
+
+function checkOut(button){
+	var bookId = button.name;
+	var id = $("#id").val();
+	$.ajax({
+		url: "Checkout",
+		data: {bookId: bookId, id: id},
+		success: checkedOutBook,
+		type: "POST"
+	});
+}
+
+function checkedOutBook(data){
+	if (data.status){
+		disableCheckoutButton(data.bookId);
+	}
+}
+
+/*---------Patrons Pages---------*/
+
+function getBooksForPatron(){
+	$.ajax({
+		url: "Records",
+		success: showRecords,
+		type: "GET"
+	});
+}
+
+function showRecords(data){
+	var contents = "<tr><th>Title</th><th>Author</th><th>Checkin</th></tr>";
+	for (var i = 0; i < result.books.length; i++) {
+		contents += "<tr><td>" + result.books[i].title + "</td>" +
+				"<td>" + result.books[i].author + "</td>" +
+				"<td><input type='button' name='" + result.books[i].id + "' value='Checkin' onclick='checkIn(this)'/></td></tr>\n";
+	}
+	$('#booktable').html(contents);
 }
 

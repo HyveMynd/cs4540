@@ -3,9 +3,10 @@
 <head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Welcome!</title>
+<title>Record</title>
 </head>
-<body onload="getBooks()">
+<body onload="getBooksForPatron()">
+	<input type="hidden" id="id" value="-1" />
 	<div style="float:right; border:1px solid black;">
 		<div id="loginArea">
 			<input style="display:inline;" type="text" id="login" placeholder="Enter your library id" /> 
@@ -15,17 +16,9 @@
 		<div id="loggedInMessage" style="color:red;"></div>
 	</div>
 	<table style="display:inline-block;" border="1" id="booktable"></table>
-	Search: <input id="filter" type="text" name="search" />
-	<h4>Search by:</h4>
-	<input type="radio" name="order" value="title" checked/>Title<br>
-	<input type="radio" name="order" value="author" />Author<br>
-	<input type="button" id="next"  value="Next" onclick="loadNextTenFromLibrary()"/>
-	<input type="button" id="previous"  value="Previous" onclick="loadPreviousTenFromLibrary()"/>
-	<input type="button" value="Reset" onclick="getBooks()"/>
-	
-	<p><a href="PatronRecord.html"">Patron Record</a></p>
+
+	<p><a href="index.html">Browsing Page</a></p>
 	<p><a href="PatronsList.html">Patrons List</a></p>
-	<input type="hidden" id="id" value="-1" />
 </body>
 <script src=script.js></script>
 </html>

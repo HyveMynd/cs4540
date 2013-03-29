@@ -1,7 +1,6 @@
 package ps8;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,17 +13,18 @@ import model.PatronCheckout;
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetCheckoutStatus
+ * Servlet implementation class Records
  */
-@WebServlet("/Patrons")
-public class Patrons extends HttpServlet {
+@WebServlet("/Records")
+public class Records extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Patrons() {
+    public Records() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,31 +39,29 @@ public class Patrons extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PatronCheckout patrons = new PatronCheckout();
+		HttpSession session = request.getSession(true);
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 				
-		String login = request.getParameter("login");
-		int register = Integer.parseInt(request.getParameter("register"));
-		
-		JSONObject results = new JSONObject();
-		switch (register){
-		case 0:
-			results = patrons.loginPatron(login);
-			break;
-		case 1:
-			results = patrons.registerPatron(login);
-			break;
+		Object o = session.getAttribute("id");
+		int patronId = 0;
+		if (o != null){
+			patronId = (int)o;
 		}
-		HttpSession session = request.getSession(true);
-		session.setAttribute("id", login);
+		else{
+			
+		}
+		
+		JSONObject results = patrons.getBooksForPatron(patronId);
+		
 		patrons.dispose();
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();
+		response.getWriter().close();	
 	}
 
 }

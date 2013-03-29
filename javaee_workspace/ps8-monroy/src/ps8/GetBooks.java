@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Books;
-import model.CheckoutStatus;
+import model.Library;
+import model.PatronCheckout;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,16 +21,12 @@ import org.json.simple.JSONObject;
 @WebServlet("/GetBooks")
 public class GetBooks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Books lib;
-    private CheckoutStatus checkout;   
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public GetBooks() {
         super();
-		lib = new Books();
-        checkout = new CheckoutStatus();
     }
 
 	/**
@@ -45,6 +41,9 @@ public class GetBooks extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Library lib = new Library();
+	    PatronCheckout checkout = new PatronCheckout();
+	    
 		HttpSession session = request.getSession(true);
 		int action = Integer.parseInt(request.getParameter("action"));
 
@@ -86,6 +85,9 @@ public class GetBooks extends HttpServlet {
 		JSONObject result = new JSONObject();
 		JSONArray books = checkout.getCheckoutStatus(lib.getBooks(offset, filter, order));
 		result.put("books", books);
+		
+		lib.dispose();
+		checkout.dispose();
 		
 		// Place information the size of the list
 		boolean atTop = (offset == 0);

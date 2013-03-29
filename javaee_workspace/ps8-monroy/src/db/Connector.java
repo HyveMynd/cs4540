@@ -18,7 +18,7 @@ public class Connector {
 		}
 	}
 	
-	public void finalize() throws Exception{
+	public void close() throws Exception{
 		con.close();
 	}
 }

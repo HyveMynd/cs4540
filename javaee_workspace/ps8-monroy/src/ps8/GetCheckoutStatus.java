@@ -7,29 +7,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.Books;
 import model.CheckoutStatus;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetBooks
+ * Servlet implementation class GetCheckoutStatus
  */
-@WebServlet("/GetBooks")
-public class GetBooks extends HttpServlet {
+@WebServlet("/GetCheckoutStatus")
+public class GetCheckoutStatus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Books lib;
     private CheckoutStatus checkout;   
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetBooks() {
+    public GetCheckoutStatus() {
         super();
-		lib = new Books();
         checkout = new CheckoutStatus();
     }
 
@@ -45,57 +41,19 @@ public class GetBooks extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
-		int action = Integer.parseInt(request.getParameter("action"));
-
-		// Get offset from session storage
-		Object os = session.getAttribute("offset");
-		if (os == null){
-			session.setAttribute("offset", 0);
-			os = 0;
-		}
-		
-		int offset = (int)os;
-		
-		switch (action){
-		case -1:
-			if (offset > 0)
-				offset--;
-			session.setAttribute("offset", offset);
-			break;
-		case 0:
-			offset = 0;
-			session.setAttribute("offset", offset);
-			break;
-		case 1:
-			offset++;
-			session.setAttribute("offset", offset);
-			break;
-		}
-		
-		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
-		
-		String filter = request.getParameter("filter");
-		String order = request.getParameter("order");
-		if (order == null) order = "title";
-		if (filter == null) filter = "";
 				
-		JSONObject result = new JSONObject();
-		JSONArray books = lib.getBooks(offset, filter, order);
-		result.put("books", books);
+		String[] ids = request.getParameterValues("ids[]");
+		JSONArray status = checkout.getCheckoutStatus(ids);
+		JSONObject results = new JSONObject();
 		
-		// Place information the size of the list
-		boolean atTop = (offset == 0);
-		boolean atBottom = (books.size() < 10);
-		result.put("atTop", atTop);
-		result.put("atBottom", atBottom);
+		results.put("status", status);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
-		response.getWriter().print(result);
+		response.getWriter().print(results);
 		response.getWriter().close();
 	}
 

@@ -5,18 +5,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Welcome!</title>
 </head>
-<body onload="getMoreBooks();">
+<body onload="getBooks()">
 <form method="GET" action="Library">
-	<table border="1" id="booktable">
-	</table>
-	<input type="text" name="search" />
+	<table style="display:inline-block;" border="1" id="booktable"></table>
+	<table style="display:inline-block;" border="1" id="status"><tr><th>Status</th></tr></table>
+	<input id="filter" type="text" name="search" />
 	<h4>Search by:</h4>
-	<input type="radio" name="searchType" value="title" checked/>Title<br>
-	<input type="radio" name="searchType" value="author" />Author<br>
-	<input type="button" name="next" value="Next"/>
-	<input type="button" name="previous" value="Previous"/>
-	<input type="button" name="reset" value="Reset"/>
-	<input type="button" name="test" value="test" onclick="ServerCall('GetBooks', load('got message'))"/>
+	<input type="radio" name="order" value="title" checked/>Title<br>
+	<input type="radio" name="order" value="author" />Author<br>
+	<input type="button" id="next"  value="Next" onclick="loadNextTenFromLibrary()"/>
+	<input type="button" id="previous"  value="Previous" onclick="loadPreviousTenFromLibrary()"/>
+	<input type="button" value="Reset" onclick="getBooks()"/>
 </form>
 </body>
 <script src=script.js></script>

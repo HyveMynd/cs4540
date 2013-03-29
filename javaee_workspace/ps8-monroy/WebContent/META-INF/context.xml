@@ -14,7 +14,7 @@
     username="library"
     password="library"
     maxActive="2"
-    maxIdle="4"
+    maxIdle="1"
     maxWait="10000"
    />
 

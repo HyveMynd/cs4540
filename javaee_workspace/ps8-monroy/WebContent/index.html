@@ -6,17 +6,22 @@
 <title>Welcome!</title>
 </head>
 <body onload="getBooks()">
-<form method="GET" action="Library">
+	<div style="float:right; border:1px solid black;">
+		<div class="login">
+			<input style="display:inline;" type="text" id="login" placeholder="Enter your library id" /> 
+			<input style="display:inline;" type="button" value="Login" onclick="login()" />
+			<input style="display:inline;" type="button" value="Register" onclick="register()" />
+		</div>
+		<div class="loggedIn" style="color:red;"></div>
+	</div>
 	<table style="display:inline-block;" border="1" id="booktable"></table>
-	<table style="display:inline-block;" border="1" id="status"><tr><th>Status</th></tr></table>
-	<input id="filter" type="text" name="search" />
+	Search: <input id="filter" type="text" name="search" />
 	<h4>Search by:</h4>
 	<input type="radio" name="order" value="title" checked/>Title<br>
 	<input type="radio" name="order" value="author" />Author<br>
 	<input type="button" id="next"  value="Next" onclick="loadNextTenFromLibrary()"/>
 	<input type="button" id="previous"  value="Previous" onclick="loadPreviousTenFromLibrary()"/>
 	<input type="button" value="Reset" onclick="getBooks()"/>
-</form>
 </body>
 <script src=script.js></script>
 </html>

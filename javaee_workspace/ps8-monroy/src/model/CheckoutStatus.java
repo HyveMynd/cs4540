@@ -17,44 +17,50 @@ public class CheckoutStatus {
 	public CheckoutStatus(){
 		try {
 			con = new Connector("monroy", "00733037", "jdbc:mysql://atr.eng.utah.edu/ps8_monroy");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (Exception e) {e.printStackTrace();}
 		stmt = con.stmt;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONArray getCheckoutStatus(String...ids){
-		String sql = getSqlString(ids);
+	public JSONArray getCheckoutStatus(JSONArray books){
+		String sql = getSqlString(books);
 		JSONArray status = new JSONArray();
 		try {
 			stmt.executeQuery(sql);
 			ResultSet result = stmt.getResultSet();
 			
 			while (result.next()){
-				JSONObject book = new JSONObject();
-				book.put("id", result.getInt("SerialNumber"));
-				book.put("status", result.getBoolean("Status"));
-				status.add(book);
+				status.add(result.getBoolean("CheckedOut"));
 			}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		} catch (SQLException e) { e.printStackTrace();}
 		
-		return status;
+		return addCheckoutStatusToBooks(books, status);
 	}
 	
-	private String getSqlString(String...ids){
-		String sql = "select Status from Checkout where SerialNumber in ";
+	private String getSqlString(JSONArray books){
+		String sql = "select CheckedOut from Checkout where SerialNumber in ";
 		String serialNumbers = "(";
-		for (String id : ids)
+		for (Object book : books){
+			JSONObject b = (JSONObject)book;
+			String id = (String)b.get("id");
 			serialNumbers += id + ",";
-		
-		serialNumbers.substring(0, serialNumbers.length());
+		}
+		serialNumbers = serialNumbers.substring(0, serialNumbers.length()-1);
 		
 		return sql + serialNumbers + ")";
+	}
+	
+	@SuppressWarnings("unchecked")
+	private JSONArray addCheckoutStatusToBooks(JSONArray books, JSONArray status){	
+		if (status.size() < 1)
+			return books;
+		
+		for (int i = 0; i < status.size(); i++){
+			JSONObject book = (JSONObject)books.get(i);
+			book.put("checkedOut", status.get(i));
+		}
+		
+		return books;
 	}
 }

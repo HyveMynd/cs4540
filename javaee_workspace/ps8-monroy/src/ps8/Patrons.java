@@ -16,15 +16,15 @@ import org.json.simple.JSONObject;
 /**
  * Servlet implementation class GetCheckoutStatus
  */
-@WebServlet("/GetCheckoutStatus")
-public class GetCheckoutStatus extends HttpServlet {
+@WebServlet("/Patrons")
+public class Patrons extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private CheckoutStatus checkout;   
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetCheckoutStatus() {
+    public Patrons() {
         super();
         checkout = new CheckoutStatus();
     }
@@ -45,11 +45,7 @@ public class GetCheckoutStatus extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 				
-		String[] ids = request.getParameterValues("ids[]");
-		JSONArray status = checkout.getCheckoutStatus(ids);
-		JSONObject results = new JSONObject();
 		
-		results.put("status", status);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");

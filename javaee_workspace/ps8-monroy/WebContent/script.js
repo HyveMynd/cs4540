@@ -1,8 +1,7 @@
-var bookIds;
-
 $(document).ready(function (){
 	//register handlers
 	$("#filter").keyup(getMoreBooks);
+	$("#loggedin").val("hello");
 });
 
 function getBooks(){
@@ -44,7 +43,7 @@ function loadPreviousTenFromLibrary(){
 }
 
 function loadBooks(result){
-	var contents = "<tr><th>Title</th><th>Author</th></tr>";
+	var contents = "<tr><th>Title</th><th>Author</th><th>Checkout</th></tr>";
 	for (var i = 0; i < result.books.length; i++) {
 		contents += "<tr><td>" + result.books[i].title + "</td>" +
 				"<td>" + result.books[i].author + "</td>" +
@@ -52,29 +51,17 @@ function loadBooks(result){
 	}
 	$('#booktable').html(contents);
 	handleButtons(result);
-	getStatusFromServer(result);
+	checkStatuses(result);
 }
 
-function getStatusFromServer(result){
-	var ids = new Array();
-	for (var i = 0; i < result.books.length; i++) {
-		ids[i] = result.books[i].id;
-	}
-	
-	$.ajax({
-		url: "GetCheckoutStatus",
-		data: {ids: ids},
-		dataType: 'json',
-		success: loadStatus,
-		type: "POST"
-	});
+function checkStatuses(result){
+	for (var i = 0; i < result.books.length; i++)
+		if (result.books[i].checkedOut)
+			disableCheckoutButton(result.books[i].id);
 }
 
-function loadStatus(result){
-	bookIds = new Array();
-	for (var i = 0; i < result.status.length; i++){
-		bookIds[i] = result.status[i];
-	}
+function disableCheckoutButton(id){
+	$("input:button[name='"+id+"']").attr('disabled', 'disabled');
 }
 
 function handleButtons(result){
@@ -91,3 +78,38 @@ function handleButtons(result){
 		$('#previous').removeAttr('disabled');
 	}
 }
+
+/*---------Login functions-----------*/
+
+function login(){
+	var login = $("login").val();
+	var register = false;
+	$.ajax({
+		url: "Patrons",
+		data: {login: login, register: register},
+		callback: loggedIn,
+		type: "POST"
+	});
+}
+
+function register(){
+	var login = $("login").val();
+	var register = false;
+	$.ajax({
+		url: "Patrons",
+		data: {login: login, register: register},
+		callback: loggedIn,
+		type: "POST"
+	});
+}
+
+function loggedIn (data){
+	if (!data.status){
+		$("#loggedin").val(data.message);
+	}
+	else{
+		$("#login").css("display", "hidden");
+		$("#loggedin").val(data.message);
+	}
+}
+

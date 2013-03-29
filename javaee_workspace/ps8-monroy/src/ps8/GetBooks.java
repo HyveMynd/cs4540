@@ -84,7 +84,7 @@ public class GetBooks extends HttpServlet {
 		if (filter == null) filter = "";
 				
 		JSONObject result = new JSONObject();
-		JSONArray books = lib.getBooks(offset, filter, order);
+		JSONArray books = checkout.getCheckoutStatus(lib.getBooks(offset, filter, order));
 		result.put("books", books);
 		
 		// Place information the size of the list

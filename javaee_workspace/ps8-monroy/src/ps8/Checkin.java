@@ -13,16 +13,16 @@ import model.PatronCheckout;
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class Records
+ * Servlet implementation class Checkin
  */
-@WebServlet("/Records")
-public class Records extends HttpServlet {
+@WebServlet("/Checkin")
+public class Checkin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Records() {
+    public Checkin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,32 +37,22 @@ public class Records extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PatronCheckout patrons = new PatronCheckout();
-		HttpSession session = request.getSession(true);
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 				
-		Object o = session.getAttribute("id");
-		int patronId = 0;
-		if (o != null){
-			patronId = Integer.parseInt((String)o);
-		}
-		else{
-			
-		}
+		String patronId = request.getParameter("id");
+		String bookId = request.getParameter("bookId");
 		
-		JSONObject results = patrons.getBooksForPatron(patronId);
-		results.put("id", patronId);
+		JSONObject results = patrons.checkInBook(patronId, bookId);
 		patrons.dispose();
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();	
-	}
+		response.getWriter().close();	}
 
 }

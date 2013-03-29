@@ -146,20 +146,61 @@ function checkedOutBook(data){
 /*---------Patrons Pages---------*/
 
 function getBooksForPatron(){
-	$.ajax({
-		url: "Records",
-		success: showRecords,
-		type: "GET"
-	});
+	var id = $("#id").val();
+	if (id < 0)
+		return;
+	else{
+		$.ajax({
+			url: "Records",
+			success: showRecords,
+			data: {id: id},
+			type: "GET"
+		});
+	}
 }
 
 function showRecords(data){
 	var contents = "<tr><th>Title</th><th>Author</th><th>Checkin</th></tr>";
-	for (var i = 0; i < result.books.length; i++) {
-		contents += "<tr><td>" + result.books[i].title + "</td>" +
-				"<td>" + result.books[i].author + "</td>" +
-				"<td><input type='button' name='" + result.books[i].id + "' value='Checkin' onclick='checkIn(this)'/></td></tr>\n";
+	for (var i = 0; i < data.books.length; i++) {
+		contents += "<tr><td>" + data.books[i].title + "</td>" +
+				"<td>" + data.books[i].author + "</td>" +
+				"<td><input type='button' name='" + data.books[i].id + "' value='Checkin' onclick='checkIn(this)'/></td></tr>\n";
 	}
 	$('#booktable').html(contents);
+}
+
+function recordLogin(){
+	var login = $("#login").val();
+	var register = 0;
+	$.ajax({
+		url: "Patrons",
+		data: {login: login, register: register},
+		success: recordLoggedIn,
+		type: "POST"
+	});
+}
+
+function recordLoggedIn(data){
+	if (!data.status){
+		$("#loggedInMessage").text(data.message);
+	}
+	else{
+		hideLogin(data);
+		setId(data);
+		getBooksForPatron();
+	}
+}
+
+/*-------------Checkin--------*/
+
+function checkIn (button){
+	var id = $("#id").val();
+	var bookId = button.name;
+	$.ajax({
+		url: "Checkin",
+		data: {id: id, bookId: bookId},
+		success: getBooksForPatron,
+		type: "POST"
+	});
 }
 

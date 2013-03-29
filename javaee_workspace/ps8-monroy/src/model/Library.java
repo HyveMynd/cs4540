@@ -27,7 +27,7 @@ public class Library {
 	public JSONObject getBooks(JSONArray ids){
 		JSONArray books = new JSONArray();
 		JSONObject ret = new JSONObject();
-		String sql = "select * from books where SerialNumbers in (";
+		String sql = "select * from books where SerialNumber in (";
 		
 		for (int i = 0; i < ids.size(); i++){
 			sql += ids.get(i) + ",";
@@ -55,7 +55,6 @@ public class Library {
 		return books;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public JSONArray getBooks(int offset, String filter, String order){
 		String sql = getSqlString(order, filter, offset);
 		JSONArray books = new JSONArray();

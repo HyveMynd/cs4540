@@ -37,6 +37,7 @@ public class Patrons extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PatronCheckout patrons = new PatronCheckout();
 		
@@ -58,6 +59,7 @@ public class Patrons extends HttpServlet {
 		}
 		HttpSession session = request.getSession(true);
 		session.setAttribute("id", login);
+		results.put("id", login);
 		patrons.dispose();
 		
 		// Send back the result as an HTTP response

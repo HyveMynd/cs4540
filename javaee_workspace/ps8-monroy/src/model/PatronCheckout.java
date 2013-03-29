@@ -149,9 +149,26 @@ public class PatronCheckout {
 		} catch (SQLException e) {e.printStackTrace();}
 		
 		Library lib = new Library();
-		JSONObject books = lib.getBooks(ids);
+		JSONObject books = new JSONObject();
+		if (ids.size() > 0)
+			books = lib.getBooks(ids);
 		lib.dispose();
 		return books;
 	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject checkInBook(String patronId, String bookId) {
+		JSONObject result = new JSONObject();
+		
+		String sql = "update Checkout set CheckedOut=0 where PatronId=" + patronId + " and SerialNumber=" + bookId;
+		
+		try {
+			stmt.execute(sql);
+			result.put("status", true);
+		} catch (SQLException e) {e.printStackTrace();}
+		
+		return result;
+	}
+	
 
 }

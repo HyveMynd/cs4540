@@ -1,4 +1,4 @@
-package ps8;
+package controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,23 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.PatronCheckout;
+import models.Patrons;
 
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class Checkout
+ * Servlet implementation class GetPatrons
  */
-@WebServlet("/Checkout")
-public class Checkout extends HttpServlet {
+@WebServlet("/GetPatrons")
+public class GetPatrons extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Checkout() {
+    public GetPatrons() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -37,24 +36,18 @@ public class Checkout extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PatronCheckout patrons = new PatronCheckout();
+		Patrons patron = new Patrons();
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
-				
-		String id = request.getParameter("id");
-		String bookId = request.getParameter("bookId");
 		
-		JSONObject results = new JSONObject();
-		results = patrons.checkoutBook(id, bookId);
-		
-		patrons.dispose();
+		JSONObject results = patron.getAllPatrons();
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();
+		response.getWriter().close();		
 	}
 
 }

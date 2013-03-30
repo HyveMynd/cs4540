@@ -5,13 +5,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Record</title>
 </head>
-<body onload="getBooksForPatron()">
+<body >
 	<input type="hidden" id="id" value="-1" />
 	<div style="float:right; border:1px solid black;">
 		<div id="loginArea">
 			<input style="display:inline;" type="text" id="login" placeholder="Enter your library id" /> 
 			<input style="display:inline;" type="button" value="Login" onclick="recordLogin()" />
-			<input style="display:inline;" type="button" value="Register" onclick="register()" />
 		</div>
 		<div id="loggedInMessage" style="color:red;"></div>
 	</div>
@@ -20,5 +19,7 @@
 	<p><a href="index.html">Browsing Page</a></p>
 	<p><a href="PatronsList.html">Patrons List</a></p>
 </body>
-<script src=script.js></script>
+<script src=scripts/script.js></script>
+<script src=scripts/patronRecords.js></script>
+<script src=scripts/checkin.js></script>
 </html>

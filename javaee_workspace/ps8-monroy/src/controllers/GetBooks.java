@@ -1,4 +1,4 @@
-package ps8;
+package controllers;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Library;
-import model.PatronCheckout;
+import models.Library;
+import models.Patrons;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,7 +42,7 @@ public class GetBooks extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Library lib = new Library();
-	    PatronCheckout checkout = new PatronCheckout();
+	    Patrons checkoutStatus = new Patrons();
 	    
 		HttpSession session = request.getSession(true);
 		int action = Integer.parseInt(request.getParameter("action"));
@@ -83,11 +83,8 @@ public class GetBooks extends HttpServlet {
 		if (filter == null) filter = "";
 				
 		JSONObject result = new JSONObject();
-		JSONArray books = checkout.getCheckoutStatus(lib.getBooks(offset, filter, order));
+		JSONArray books = checkoutStatus.getCheckoutStatus(lib.getBooks(offset, filter, order));
 		result.put("books", books);
-		
-		lib.dispose();
-		checkout.dispose();
 		
 		// Place information the size of the list
 		boolean atTop = (offset == 0);

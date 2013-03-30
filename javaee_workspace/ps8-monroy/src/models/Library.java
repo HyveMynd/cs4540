@@ -1,26 +1,18 @@
-package model;
+package models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import db.Connector;
+import db.LibraryConnector;
 
 public class Library {
-	private Connector libraryCon;
-	private Statement stmt;
-	
+	LibraryConnector con;
+
 	public Library(){
-		try {
-			libraryCon = new Connector("library", "library", 
-					"jdbc:mysql://atr.eng.utah.edu/collection");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		stmt = libraryCon.stmt;
+		con = LibraryConnector.getConnection();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,6 +31,8 @@ public class Library {
 			books = fillWithBooks(results);
 		} catch (SQLException e) {e.printStackTrace();}
 		ret.put("books", books);
+		
+		con.dispose();
 		return ret;
 	}
 	
@@ -52,6 +46,7 @@ public class Library {
 			book.put("id", result.getString("SerialNumber"));
 			books.add(book);
 		}
+		
 		return books;
 	}
 	
@@ -66,6 +61,8 @@ public class Library {
 			e.printStackTrace();
 			return null;
 		}
+		
+		con.dispose();
 		return books;
 	}
 	
@@ -81,16 +78,10 @@ public class Library {
 	private ResultSet execute(String sql){
 		ResultSet result = null;
 		try {
-			stmt.executeQuery(sql);
-			result = stmt.getResultSet();
+			con.stmt.executeQuery(sql);
+			result = con.stmt.getResultSet();
 		} catch (SQLException e) {e.printStackTrace();}
 		return result;
 	}
-	
-	public void dispose(){
-		try {
-			stmt.close();
-			libraryCon.close();
-		} catch (Exception e) {e.printStackTrace();}
-	}
+
 }

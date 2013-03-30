@@ -1,30 +1,29 @@
-package ps8;
+package controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.PatronCheckout;
+import models.Patrons;
 
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class Records
+ * Servlet implementation class GetCheckoutStatus
  */
-@WebServlet("/Records")
-public class Records extends HttpServlet {
+@WebServlet("/LoginPatron")
+public class LoginPatron extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Records() {
+    public LoginPatron() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,30 +38,30 @@ public class Records extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PatronCheckout patrons = new PatronCheckout();
-		HttpSession session = request.getSession(true);
+		Patrons patron = new Patrons();
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 				
-		Object o = session.getAttribute("id");
-		int patronId = 0;
-		if (o != null){
-			patronId = Integer.parseInt((String)o);
-		}
-		else{
-			
-		}
+		String login = request.getParameter("login");
+		int register = Integer.parseInt(request.getParameter("register"));
 		
-		JSONObject results = patrons.getBooksForPatron(patronId);
-		results.put("id", patronId);
-		patrons.dispose();
+		JSONObject results = new JSONObject();
+		switch (register){
+		case 0:
+			results = patron.loginPatron(login);
+			break;
+		case 1:
+			results = patron.registerPatron(login);
+			break;
+		}
+		results.put("id", login);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();	
+		response.getWriter().close();
 	}
 
 }

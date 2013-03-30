@@ -1,24 +1,19 @@
-package model;
+package models;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import db.Connector;
+import db.PatronsConnector;
 
-public class PatronCheckout {
-	private Connector con;
-	private Statement stmt;
+public class Patrons {
+	private PatronsConnector con;
 	
-	public PatronCheckout(){
-		try {
-			con = new Connector("monroy", "00733037", "jdbc:mysql://atr.eng.utah.edu/ps8_monroy");
-		} catch (Exception e) {e.printStackTrace();}
-		stmt = con.stmt;
+	public Patrons(){
+		con = PatronsConnector.getConnection();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -33,15 +28,8 @@ public class PatronCheckout {
 			}
 			
 		} catch (SQLException e) { e.printStackTrace();}
-		finally{
-			try {
-				stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		
+		con.dispose();
 		return addCheckoutStatusToBooks(books, status);
 	}
 	
@@ -93,14 +81,15 @@ public class PatronCheckout {
 			patron.put("status", true);
 		}
 		
+		con.dispose();
 		return patron;
 	}
 	
 	private ResultSet execute(String sql){
 		ResultSet result = null;
 		try {
-			stmt.executeQuery(sql);
-			result = stmt.getResultSet();
+			con.stmt.executeQuery(sql);
+			result = con.stmt.getResultSet();
 		} catch (SQLException e) {e.printStackTrace();}
 		
 		return result;
@@ -109,36 +98,17 @@ public class PatronCheckout {
 	public JSONObject registerPatron(String login) {
 		String sql = "insert into Patrons (LibraryId) values ("+login+")";
 		try{
-			stmt.execute(sql);
+			con.stmt.execute(sql);
 			
 		} catch (SQLException e){}
 		
+		con.dispose();
 		return loginPatron(login);
-	}
-	
-	public void dispose(){
-		try {
-			stmt.close();
-			con.close();
-		} catch (Exception e) {e.printStackTrace();}
-	}
-
-	@SuppressWarnings("unchecked")
-	public JSONObject checkoutBook(String id, String bookId) {
-		String sql = "INSERT INTO Checkout (SerialNumber, CheckedOut, PatronId) VALUES ("+bookId+",1,"+id+") ON DUPLICATE KEY UPDATE CheckedOut=1";
-		JSONObject result = new JSONObject();
-		try {
-			stmt.execute(sql);
-			result.put("status", true);
-			result.put("bookId", bookId);
-		} catch (SQLException e) {e.printStackTrace();}
-		
-		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	public JSONObject getBooksForPatron(int patronId) {
-		String sql = "select SerialNumber from Checkout where PatronId =" + patronId;
+		String sql = "select SerialNumber from Checkout where PatronId =" + patronId + " and Checkedout=1";
 		JSONArray ids = new JSONArray();
 		ResultSet results = execute(sql);
 		
@@ -152,23 +122,33 @@ public class PatronCheckout {
 		JSONObject books = new JSONObject();
 		if (ids.size() > 0)
 			books = lib.getBooks(ids);
-		lib.dispose();
+
+		con.dispose();
 		return books;
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject checkInBook(String patronId, String bookId) {
-		JSONObject result = new JSONObject();
-		
-		String sql = "update Checkout set CheckedOut=0 where PatronId=" + patronId + " and SerialNumber=" + bookId;
+	public JSONObject getAllPatrons() {
+		String sql = "select * from Patrons order by Name asc";
+		JSONArray patrons = new JSONArray();
+		JSONObject ret = new JSONObject();
+		ResultSet results = execute(sql);
 		
 		try {
-			stmt.execute(sql);
-			result.put("status", true);
-		} catch (SQLException e) {e.printStackTrace();}
+			while (results.next()){
+				JSONObject patron = new JSONObject();
+				patron.put("patronName", results.getString("Name"));
+				patron.put("id", results.getInt("LibraryId"));
+				patrons.add(patron);
+			}
+		}catch(Exception e){e.printStackTrace();}
+		ret.put("patrons", patrons);
 		
-		return result;
+		con.dispose();
+		return ret;
 	}
+
+	
 	
 
 }

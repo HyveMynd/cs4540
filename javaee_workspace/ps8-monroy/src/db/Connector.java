@@ -18,7 +18,12 @@ public class Connector {
 		}
 	}
 	
-	public void close() throws Exception{
-		con.close();
+	public void dispose() {
+		try {
+			stmt.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		try {
+			con.close();
+		} catch (SQLException e) {e.printStackTrace();}
 	}
 }

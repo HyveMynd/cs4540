@@ -1,28 +1,28 @@
-package ps8;
+package controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.PatronCheckout;
+import models.Checkin;
 
 import org.json.simple.JSONObject;
 
 /**
  * Servlet implementation class Checkin
  */
-@WebServlet("/Checkin")
-public class Checkin extends HttpServlet {
+@WebServlet("/CheckinBooks")
+public class CheckinBooks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Checkin() {
+    public CheckinBooks() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +38,7 @@ public class Checkin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PatronCheckout patrons = new PatronCheckout();
+		Checkin checkin = new Checkin();
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
@@ -47,8 +47,7 @@ public class Checkin extends HttpServlet {
 		String patronId = request.getParameter("id");
 		String bookId = request.getParameter("bookId");
 		
-		JSONObject results = patrons.checkInBook(patronId, bookId);
-		patrons.dispose();
+		JSONObject results = checkin.checkInBook(patronId, bookId);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");

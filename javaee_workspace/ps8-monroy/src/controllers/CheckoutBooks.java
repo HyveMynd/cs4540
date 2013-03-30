@@ -1,4 +1,4 @@
-package ps8;
+package controllers;
 
 import java.io.IOException;
 
@@ -7,24 +7,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.PatronCheckout;
+import models.Checkout;
 
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetCheckoutStatus
+ * Servlet implementation class Checkout
  */
-@WebServlet("/Patrons")
-public class Patrons extends HttpServlet {
+@WebServlet("/CheckoutBooks")
+public class CheckoutBooks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Patrons() {
+    public CheckoutBooks() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -37,31 +37,19 @@ public class Patrons extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PatronCheckout patrons = new PatronCheckout();
+		Checkout checkout = new Checkout();
 		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 				
-		String login = request.getParameter("login");
-		int register = Integer.parseInt(request.getParameter("register"));
+		String id = request.getParameter("id");
+		String bookId = request.getParameter("bookId");
 		
 		JSONObject results = new JSONObject();
-		switch (register){
-		case 0:
-			results = patrons.loginPatron(login);
-			break;
-		case 1:
-			results = patrons.registerPatron(login);
-			break;
-		}
-		HttpSession session = request.getSession(true);
-		session.setAttribute("id", login);
-		results.put("id", login);
-		patrons.dispose();
-		
+		results = checkout.checkoutBook(id, bookId);
+				
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);

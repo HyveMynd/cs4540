@@ -8,7 +8,7 @@ public class PS10Database extends Connector{
 	
 	public static PS10Database getConnection(){
 		try {
-			return new PS10Database("monroy", "00733037", "jdbc:mysql://atr.eng.utah.edu/ps10_monroy");
+			return new PS10Database("monroy_sw", "00733037", "jdbc:mysql://atr.eng.utah.edu/ps10_monroy");
 		} catch (Exception e) {e.printStackTrace();}
 		return null;
 	}

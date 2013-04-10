@@ -29,8 +29,7 @@ public class Login {
 				result.put("message", "Welcome " + results.getString("Name"));
 				result.put("role", results.getString("Role"));
 			}
-		} catch (SQLException e) 
-		{e.printStackTrace();}
+		} catch (SQLException e) {e.printStackTrace();}
 		
 		// Check for invalid login
 		if (result.size() < 1){

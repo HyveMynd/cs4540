@@ -1,0 +1,57 @@
+table{
+	border: 1;	
+}
+
+.products{
+	display:inline-block;	
+}
+
+.specs{
+	display:inline-block;	
+}
+
+.specs p{
+	border-style: ridge;
+}
+
+.reviews table{
+	display:inline-block;
+}
+
+.reviews p{
+	display:inline-block;
+	border-style: ridge;
+}
+
+.reviews input{
+	display:block;	
+}
+
+.navTabs{
+	float:left;
+	padding-right: 0px;
+}
+
+.navTabs input{
+	background-color:menu;
+	font: medium bold;
+	text-align: center;
+}
+
+.login{
+	float:right;
+}
+
+.login input{
+	display:inline;
+}
+
+.toolbar li {
+	display:inline;
+	background-color:#eee;
+	border:1px solid;
+	border-color:#f3f3f3 #bbb #bbb #f3f3f3;
+	margin:0;
+	padding:.5em;
+	zoom: 1;
+}

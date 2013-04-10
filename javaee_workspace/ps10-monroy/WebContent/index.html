@@ -2,11 +2,50 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/style.css" />
 <title>Web Portal</title>
 </head>
 <body>
-<div class="login" style="display:float-left;">
-
+<div class="wrap-header">
+	<div class="login">
+		<input type="text" id="login" placeholder="Enter your login" /> 
+		<input type="password" id="password" placeholder="Enter your password" /> 
+		<input type="button" value="Login" onclick="login()" />
+		<input type="button" value="Register" onclick="register()" />
+	</div>
+	<ul class="toolbar">
+		<li><a href=”#”>Products</a></li>
+		<li><a href=”#”>Contact Us</a></li>	
+	</ul>
+</div>
+<div class="wrap-body">
+	<div class="products">
+		<table class="product-table">
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+			</tr>
+		</table>
+	</div>
+	<div class="specs">
+		<p id="specs-desc">
+			this is the specs of the table
+		</p>
+	</div>
+	<div class="reviews">
+		<table id="reviews-table">
+			<tr>
+				<th>User</th>
+				<th>Rating</th>
+			</tr>
+		</table>
+		<p id="reviews-desc">
+			this is the review desc
+		</p>
+		<input type="button" value="Add"  onclick="AddReview(this)"/>
+		<input type="button" value="Edit" onclick="EditReview(this)"/>
+	</div>
 </div>
 </body>
 </html>

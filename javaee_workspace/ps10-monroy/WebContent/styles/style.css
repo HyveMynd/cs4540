@@ -1,5 +1,13 @@
 table{
-	border: 1;	
+	border: 1px solid black;	
+}
+
+.float-right{
+	float:right;
+}
+
+.float-left{
+	float:left;
 }
 
 .products{
@@ -27,19 +35,10 @@ table{
 	display:block;	
 }
 
-.navTabs{
-	float:left;
-	padding-right: 0px;
-}
-
 .navTabs input{
 	background-color:menu;
 	font: medium bold;
 	text-align: center;
-}
-
-.login{
-	float:right;
 }
 
 .login input{

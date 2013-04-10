@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Checkin;
-
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class Checkin
+ * Servlet implementation class Login
  */
-@WebServlet("/CheckinBooks")
-public class CheckinBooks extends HttpServlet {
+@WebServlet("/Login")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckinBooks() {
+    public Login() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,21 +36,21 @@ public class CheckinBooks extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Checkin checkin = new Checkin();
-		
 		// Turn off caching and grab the incoming prefix parameter
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
-				
-		String patronId = request.getParameter("id");
-		String bookId = request.getParameter("bookId");
 		
-		JSONObject results = checkin.checkInBook(patronId, bookId);
+		//Do work
+		models.Login loginModel = new models.Login();
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
+		JSONObject results = loginModel.validateLogin(login, password);
+		
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();	
+		response.getWriter().close();
 	}
 
 }

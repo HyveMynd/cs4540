@@ -8,44 +8,40 @@
 </head>
 <body>
 <div class="wrap-header">
-	<div class="login">
-		<input type="text" id="login" placeholder="Enter your login" /> 
-		<input type="password" id="password" placeholder="Enter your password" /> 
-		<input type="button" value="Login" onclick="login()" />
-		<input type="button" value="Register" onclick="register()" />
+	<div class="float-right">
+		<div class="login">
+			<input type="text" id="login" placeholder="Enter your login" /> 
+			<input type="password" id="password" placeholder="Enter your password" /> 
+			<input type="button" value="Login" onclick="login()" />
+			<input type="button" value="Register" onclick="register()" />
+		</div>
+		<p id="message"></p>
 	</div>
-	<ul class="toolbar">
-		<li><a href=”#”>Products</a></li>
-		<li><a href=”#”>Contact Us</a></li>	
-	</ul>
+	<div class="float-left">
+		<ul class="toolbar">
+			<li id="inventory"><a href=”#”>Inventory</a></li>
+			<li id="cart"><a href=”#”>Cart</a></li>
+			<li id="products"><a href=”#”>Browse Products</a></li>
+			<li id="contact"><a href=”#”>Contact Us</a></li>	
+		</ul>
+	</div>
 </div>
 <div class="wrap-body">
 	<div class="products">
-		<table class="product-table">
-			<tr>
-				<th>Name</th>
-				<th>Quantity</th>
-			</tr>
-		</table>
+		<table class="product-table"></table>
 	</div>
 	<div class="specs">
-		<p id="specs-desc">
-			this is the specs of the table
-		</p>
+		<p id="specs-desc"></p>
 	</div>
 	<div class="reviews">
-		<table id="reviews-table">
-			<tr>
-				<th>User</th>
-				<th>Rating</th>
-			</tr>
-		</table>
-		<p id="reviews-desc">
-			this is the review desc
-		</p>
+		<table id="reviews-table"></table>
+		<p id="reviews-desc"></p>
 		<input type="button" value="Add"  onclick="AddReview(this)"/>
 		<input type="button" value="Edit" onclick="EditReview(this)"/>
 	</div>
 </div>
 </body>
+<script src="scripts/toolbar.js"></script>
+<script src="scripts/server.js"></script>
+<script src="scripts/login.js"></script>
 </html>

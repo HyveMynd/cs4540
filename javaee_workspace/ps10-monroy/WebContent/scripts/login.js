@@ -7,10 +7,20 @@ function login(){
 
 function loginSuccess(data){
 	//save user id in a cookie
-	$.cookie("userId", data.id);
+	setCookie("user", {userId: data.id, role: data.role});
 	if (data.id > 0){
-		$(".login").hide();
+		loggedInView();
 	}
-	$("#message").val(data.message);
+	$("#message").text(data.message);
 }
+
+function logout(){
+	removeCookie("user");
+	defaultView();
+	$("#message").text("");
+}
+
+$(document).ready(function(){
+	$("#message").click(logout);
+});
 

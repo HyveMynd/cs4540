@@ -18,7 +18,7 @@ public class Login {
 	@SuppressWarnings("unchecked")
 	public JSONObject validateLogin (String login, String password){
 		JSONObject result = new JSONObject();
-		String sql = "select * from Users where Login=" + login + " and Password=" + password;
+		String sql = "select * from Users where Login='" + login + "' and Password='" + password + "'";
 		
 		try {
 			con.stmt.executeQuery(sql);
@@ -27,10 +27,13 @@ public class Login {
 			while (results.next()){
 				result.put("id", results.getInt("Id"));
 				result.put("message", "Welcome " + results.getString("Name"));
+				result.put("role", results.getString("Role"));
 			}
 		} catch (SQLException e) 
-		{
-			e.printStackTrace();
+		{e.printStackTrace();}
+		
+		// Check for invalid login
+		if (result.size() < 1){
 			result.put("id", -1);
 			result.put("message", "Login invalid. Please try again");
 		}

@@ -41,8 +41,17 @@ table{
 	text-align: center;
 }
 
+.login{
+	border:1px solid black;
+}
+
 .login input{
 	display:inline;
+}
+
+#message{
+	font-size: medium;
+	border:1px solid black;
 }
 
 .toolbar li {

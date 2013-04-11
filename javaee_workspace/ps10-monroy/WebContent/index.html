@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="styles/style.css" />
 <title>Web Portal</title>
 </head>
-<body>
+<body onload="getProducts()">
 <div class="wrap-header">
 	<div class="float-right">
 		<div class="login">
@@ -22,7 +22,7 @@
 	<ul class="toolbar">
 		<li id="inventory"><a href=”#”>Inventory</a></li>
 		<li id="cart"><a href=”#”>Cart</a></li>
-		<li id="products"><a href=”#”>Browse Products</a></li>
+		<li id="products" onclick="" >Browse Products</li>
 		<li id="contact"><a href=”#”>Contact Us</a></li>	
 	</ul>
 </div>
@@ -48,4 +48,5 @@
 <script src="scripts/cookies.js"></script>
 <script src="scripts/views.js"></script>
 <script src="scripts/register.js"></script>
+<script src="scripts/products.js"></script>
 </html>

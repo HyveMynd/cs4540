@@ -2,6 +2,12 @@ table{
 	border: 1px solid black;	
 }
 
+.product-table td{
+	color:blue;
+	text-decoration: underline; 
+	cursor: pointer;
+}
+
 .float-right{
 	float:right;
 }
@@ -62,4 +68,7 @@ table{
 	margin:0;
 	padding:.5em;
 	zoom: 1;
+	color:blue;
+	text-decoration: underline; 
+	cursor: pointer
 }

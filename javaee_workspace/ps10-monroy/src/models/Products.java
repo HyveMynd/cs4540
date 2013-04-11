@@ -42,4 +42,22 @@ public class Products {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public JSONObject getSpecs(String id) {
+		JSONObject result = new JSONObject();
+		String sql = "select Specifications from Products where Id=" + id;
+		
+		try {
+			con.stmt.executeQuery(sql);
+			ResultSet results = con.stmt.getResultSet();
+			
+			while (results.next()){
+				result.put("specs", results.getString("Specifications"));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+				
+		con.dispose();
+		return result;
+	}
+
 }

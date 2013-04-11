@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +12,16 @@ import models.Products;
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetProducts
+ * Servlet implementation class GetSpecifications
  */
-@WebServlet("/Products")
-public class GetProducts extends HttpServlet {
+@WebServlet("/Specifications")
+public class GetSpecifications extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetProducts() {
+    public GetSpecifications() {
         super();
     }
 
@@ -43,7 +42,8 @@ public class GetProducts extends HttpServlet {
 		
 		//Do work
 		Products productModel = new Products();
-		JSONObject results = productModel.getAllProducts();
+		String id = request.getParameter("id");
+		JSONObject results = productModel.getSpecs(id);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");

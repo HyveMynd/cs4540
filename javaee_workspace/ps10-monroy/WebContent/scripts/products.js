@@ -1,3 +1,5 @@
+var selectedProduct;
+
 function getProducts(){
 	serverCall("Products", null, showProducts);
 }
@@ -15,10 +17,23 @@ function showProducts(data){
 
 function getSpecs(td){
 	var id = td.parentNode.id;
+	selectedProduct = id;
 	getReview(td);
 	serverCall("Specifications", {id: id}, loadSpecs);
 }
 
 function loadSpecs(data){
 	$("#specs-desc").html(data.specs);
+}
+
+function addProduct(){
+	var brand = $("#brandText").val();
+	var name = $("#nameText").val();
+	var quantity = $("#quantityText").val();
+
+	serverCall("AddProduct", {brand: brand, name: name, quantity: quantity}, addedProduct());
+}
+
+function addedProduct(data){
+	alert("Added new product!");
 }

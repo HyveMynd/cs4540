@@ -57,4 +57,17 @@ public class Reviews {
 		return result;
 	}
 
+	public JSONObject addReview(String prodId, String userId, String rating, String review) {
+		JSONObject result = new JSONObject();
+		String sql = "Insert into Reviews (User_Id, Prod_Id, Rating, Review) values ("+userId+","+prodId+","+rating+",'"+review+"')";
+		
+		try {
+			con.stmt.execute(sql);
+
+		} catch (SQLException e) {e.printStackTrace();}
+
+		con.dispose();
+		return result;
+	}
+
 }

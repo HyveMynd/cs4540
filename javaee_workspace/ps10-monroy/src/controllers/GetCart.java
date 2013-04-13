@@ -1,27 +1,28 @@
 package controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Reviews;
+import models.Products;
 
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetReviewDesc
+ * Servlet implementation class GetCart
  */
-@WebServlet("/ReviewDesc")
-public class GetReviewDesc extends HttpServlet {
+@WebServlet("/GetCart")
+public class GetCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetReviewDesc() {
+    public GetCart() {
         super();
     }
 
@@ -41,9 +42,9 @@ public class GetReviewDesc extends HttpServlet {
 		response.setHeader("Pragma", "no-cache");
 				
 		//Do work
-		Reviews reviewModel = new Reviews();
-		String revId = request.getParameter("id");
-		JSONObject results = reviewModel.getReviewDesc(revId);
+		Products productModel = new Products();
+		String[] cart = request.getParameterValues("cart[]");
+		JSONObject results = productModel.getCartProducts(cart);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");

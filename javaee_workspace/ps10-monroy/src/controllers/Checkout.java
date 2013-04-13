@@ -7,21 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Reviews;
+import models.Products;
 
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetReviewDesc
+ * Servlet implementation class Checkout
  */
-@WebServlet("/ReviewDesc")
-public class GetReviewDesc extends HttpServlet {
+@WebServlet("/Checkout")
+public class Checkout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetReviewDesc() {
+    public Checkout() {
         super();
     }
 
@@ -41,14 +41,14 @@ public class GetReviewDesc extends HttpServlet {
 		response.setHeader("Pragma", "no-cache");
 				
 		//Do work
-		Reviews reviewModel = new Reviews();
-		String revId = request.getParameter("id");
-		JSONObject results = reviewModel.getReviewDesc(revId);
+		Products productModel = new Products();
+		String[] cart = request.getParameterValues("cart[]");
+		JSONObject results = productModel.checkoutProducts(cart);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();		
+		response.getWriter().close();	
 	}
 
 }

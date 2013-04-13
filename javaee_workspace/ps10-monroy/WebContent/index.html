@@ -20,10 +20,9 @@
 		<p id="message"></p>
 	</div>
 	<ul class="toolbar">
-		<li id="inventory"><a href=”#”>Inventory</a></li>
-		<li id="cart"><a href=”#”>Cart</a></li>
-		<li id="products" onclick="" >Browse Products</li>
-		<li id="contact"><a href=”#”>Contact Us</a></li>	
+		<li id="inventory" onclick='showInventoryAdd()'>Inventory</li>
+		<li id="cart" onclick='getCart()'>Cart</li>
+		<li id="products" onclick="showProductBrowse()" >Browse Products</li>
 	</ul>
 </div>
 <div class="wrap-body">
@@ -36,9 +35,12 @@
 	<div class="reviews">
 		<table class="reviews-table"></table>
 		<p id="reviews-desc"></p>
-		<input type="button" value="Add"  onclick="addReview()"/>
+		<div class='wrap-add'>
+		</div>
+		<input id='addReview' type="button" value="Add" />
 	</div>
 </div>
+
 </body>
 <script src="scripts/toolbar.js"></script>
 <script src="scripts/server.js"></script>
@@ -49,4 +51,5 @@
 <script src="scripts/register.js"></script>
 <script src="scripts/products.js"></script>
 <script src="scripts/reviews.js"></script>
+<script src="scripts/cart.js"></script>
 </html>

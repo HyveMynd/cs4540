@@ -12,16 +12,16 @@ import models.Reviews;
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class GetReviewDesc
+ * Servlet implementation class AddReview
  */
-@WebServlet("/ReviewDesc")
-public class GetReviewDesc extends HttpServlet {
+@WebServlet("/AddReview")
+public class AddReview extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetReviewDesc() {
+    public AddReview() {
         super();
     }
 
@@ -42,13 +42,16 @@ public class GetReviewDesc extends HttpServlet {
 				
 		//Do work
 		Reviews reviewModel = new Reviews();
-		String revId = request.getParameter("id");
-		JSONObject results = reviewModel.getReviewDesc(revId);
+		String prodId = request.getParameter("prodId");
+		String review = request.getParameter("review");
+		String rating = request.getParameter("rating");
+		String userId = request.getParameter("userId");
+		JSONObject results = reviewModel.addReview(prodId, userId, rating, review);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();		
+		response.getWriter().close();
 	}
 
 }

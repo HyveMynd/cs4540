@@ -8,6 +8,12 @@ table{
 	cursor: pointer;
 }
 
+.reviews-table td{
+	color:blue;
+	text-decoration: underline; 
+	cursor: pointer;
+}
+
 .float-right{
 	float:right;
 }

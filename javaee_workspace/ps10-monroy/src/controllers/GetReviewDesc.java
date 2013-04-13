@@ -1,28 +1,28 @@
 package controllers;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Reviews;
+
 import org.json.simple.JSONObject;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class GetReviewDesc
  */
-@WebServlet("/Login")
-public class LoginUser extends HttpServlet {
+@WebServlet("/ReviewDesc")
+public class GetReviewDesc extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginUser() {
+    public GetReviewDesc() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -41,16 +41,13 @@ public class LoginUser extends HttpServlet {
 		response.setHeader("Pragma", "no-cache");
 				
 		//Do work
-		models.Login loginModel = new models.Login();
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		JSONObject results = loginModel.validateLogin(login, password);
-		
+		Reviews reviewModel = new Reviews();
+		String revId = request.getParameter("id");
+		JSONObject results = reviewModel.getReviewDesc(revId);
 		
 		// Send back the result as an HTTP response
 		response.setContentType("application/json");
 		response.getWriter().print(results);
-		response.getWriter().close();
-	}
+		response.getWriter().close();		}
 
 }

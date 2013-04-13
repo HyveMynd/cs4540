@@ -29,6 +29,5 @@ function asdf(){
 		"<table id='reviews-table'></table>"+
 		"<p id='reviews-desc'></p>"+
 		"<input type='button' value='Add'  onclick='AddReview(this)'/>"+
-		"<input type='button' value='Edit' onclick='EditReview(this)'/>"+
 	"</div>");
 }

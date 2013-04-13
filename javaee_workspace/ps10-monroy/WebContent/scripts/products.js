@@ -15,6 +15,7 @@ function showProducts(data){
 
 function getSpecs(td){
 	var id = td.parentNode.id;
+	getReview(td);
 	serverCall("Specifications", {id: id}, loadSpecs);
 }
 

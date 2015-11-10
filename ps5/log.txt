@@ -1,6 +1,0 @@
-Mon, 18 Feb 2013 09:32:36 +0100
-There is no active transaction#0 C:\xampp\htdocs\cs4540\ps5\db.php(31): PDO->commit()
-#1 C:\xampp\htdocs\cs4540\ps5\Store.php(18): storeResume('trqweq', 'asd', '6616441393', 'qwe', 'asdfasdfasdfasd...', Array, Array, Array)
-#2 C:\xampp\htdocs\cs4540\ps5\Switch.php(4): require('C:\xampp\htdocs...')
-#3 {main}
-
